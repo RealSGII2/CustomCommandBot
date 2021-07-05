@@ -42,16 +42,49 @@
 }
 
 .list {
-	display: flex;
+	display: flex !important;
 	flex-direction: column;
 	gap: 1.5rem;
 
 	.bullet {
-		margin-right: 1rem;
+		margin-right: 6px;
 		opacity: 0.54;
 	}
 
 	& > div {
 		line-height: 130%;
+	}
+}
+
+.heroHeader {
+	background-color: $background-secondary;
+	border-top: solid 1px $background-tertiary;
+	padding: 8vh 0;
+
+	&.content {
+		padding: 3rem;
+		border-top: none;
+		background-color: transparent;
+	}
+
+	.left {
+		flex: 2 0;
+	}
+
+	.right {
+		flex: 3 0;
+	}
+
+	&.content + & {
+		padding-top: 0;
+
+		.left,
+		.right {
+			padding-top: 3rem;
+		}
+
+		.left {
+			border-top: solid 1px $background-tertiary !important;
+		}
 	}
 }
