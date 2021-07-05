@@ -1,0 +1,47 @@
+.appTitle {
+	font-size: 20px;
+	font-weight: 700;
+	font-family: "Red Hat Display", sans-serif;
+}
+
+h1,
+h2,
+h3,
+.displayText {
+	font-family: "Red Hat Display", sans-serif;
+	font-weight: 700;
+	letter-spacing: 0.025em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	margin: 0;
+	margin-bottom: 1rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+b,
+i {
+	line-height: 130%;
+}
+
+h2 {
+	font-size: 34px;
+}
+
+.heroText {
+	display: block;
+	font-size: 18px;
+	opacity: 0.84;
+}

@@ -1,0 +1,92 @@
+button {
+	outline: 0;
+
+	font-size: 0.875rem;
+	line-height: 145%;
+
+	border-radius: 999px;
+
+	font-weight: 700;
+
+	padding: 0 1rem;
+	height: 32px;
+	border: none;
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	transition: 130ms ease-out;
+
+	cursor: pointer;
+
+	span {
+		vertical-align: baseline;
+	}
+
+	.material-icons {
+		position: relative;
+		left: -6px;
+	}
+
+	& {
+		color: $cta;
+		background-color: colp($cta, $color-change);
+
+		&:hover {
+			background-color: colp($cta, $color-change * 1.5);
+		}
+
+		&:active {
+			background-color: colp($cta, $color-change * 2);
+		}
+	}
+
+	&.cta {
+		color: $background-primary;
+		background-color: $cta;
+
+		&:hover {
+			background-color: darken($cta, $color-change);
+		}
+
+		&:active {
+			background-color: darken($cta, $color-change * 2);
+		}
+	}
+
+	&.action {
+		.material-icons {
+			font-size: 20px;
+		}
+	}
+
+	&.overBackground {
+		color: $background-primary;
+		background-color: #aaaaaa;
+
+		&:hover {
+			background-color: lighten(#aaaaaa, $color-change);
+		}
+
+		&:active {
+			background-color: lighten(#aaaaaa, $color-change * 2);
+		}
+	}
+
+	&.large {
+		font-size: 16px;
+		height: 38px;
+		padding: 0 1.25rem;
+
+		// font-family: "Red Hat Display", sans-serif;
+
+		span {
+			transform: translateY(-1px);
+		}
+	}
+
+	&:not(.large) {
+		line-height: 16px;
+	}
+}

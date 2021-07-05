@@ -1,0 +1,41 @@
+// Imports
+@import 'imports';
+
+// Import misc & vars
+@import 'functions';
+@import 'vars';
+
+// Components
+@import 'components/appbar';
+@import 'components/button';
+@import 'components/dashboard';
+@import 'components/footer';
+@import 'components/layout';
+@import 'components/typography';
+
+// Global 
+html,
+body {
+	width: 100%;
+	height: 100%;
+
+	margin: 0;
+	padding: 0;
+
+	box-sizing: border-box;
+}
+
+body {
+	background-color: $background-primary;
+	color: #fff;
+
+	font-family: "Lato", sans-serif;
+}
+
+* {
+	box-sizing: inherit;
+	font-family: inherit;
+	font-weight: inherit;
+	color: inherit;
+	outline: none !important;
+}
