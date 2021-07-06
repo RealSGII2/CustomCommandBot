@@ -92,6 +92,10 @@ namespace CustomCommandBot.Server.Bot.Components.CommandHandler
             {
                 Title = "Command Failed",
                 Description = $"**Reason:** {result.ErrorReason}",
+                Footer = new()
+                {
+                    Text = "Think this is an issue with the bot? Please report it on our GitHub Issues page."
+                },
                 Color = new(207, 102, 121)
             };
 
