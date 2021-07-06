@@ -17,7 +17,7 @@ namespace CustomCommandBot.Server.Bot.Components
         [Alias("commands", "cmds")]
         public async Task<RuntimeResult> TestCommand()
         {
-            return CommandResult.FromError("Unimplemented.");
+            return CommandExceptionResult.FromError("Unimplemented.");
         }
 
         [Command("add-test-command")]
