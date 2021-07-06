@@ -14,6 +14,8 @@ namespace CustomCommandBot.Server
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            TypeSerialisationRegisterer.SerialiseDatabaseTypes();
         }
 
         public IConfiguration Configuration { get; }
