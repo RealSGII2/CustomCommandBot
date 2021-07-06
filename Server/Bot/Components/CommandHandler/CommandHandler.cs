@@ -51,7 +51,7 @@ namespace CustomCommandBot.Server.Bot.Components.CommandHandler
 
             SocketCommandContext context = new(Client, message);
 
-            // Check if custom commands
+            // Check if custom command
             var results = context.Guild.GetCommands().Where(command =>
                 (command.TriggerType == CommandTriggerType.BeginsWith && message.Content.StartsWith(command.Trigger)) ||
                 (command.TriggerType == CommandTriggerType.EndsWith && message.Content.EndsWith(command.Trigger)) ||
@@ -87,25 +87,41 @@ namespace CustomCommandBot.Server.Bot.Components.CommandHandler
 
         private async Task OnCommandExecuted(Optional<CommandInfo> command, ICommandContext context, IResult result)
         {
-            if (result is CommandResult && result.IsSuccess)
-            {
-                if (!string.IsNullOrEmpty(result.ErrorReason))
-                    await context.Channel.SendMessageAsync(result.ErrorReason);
 
-                return;
+            switch (result)
+            {
+                case CommandExceptionResult:
+
+                    string issueURL = "https://github.com/RealSGII2/CustomCommandBot/issues/new?assignees=&labels=bug&template=bug-report.md&title=bug%3A+";
+
+                    EmbedBuilder errorEmbed = new()
+                    {
+                        Title = "Command Failed",
+                        Description = $"Oops! That wasn't supposed to happen. Please make a [new issue]({issueURL}) on our GitHub following the provided format.",
+                        Color = new(207, 102, 121)
+                    };
+
+                    errorEmbed.AddField("Executor ID", context.User.Id, true);
+                    errorEmbed.AddField("Guild ID", context.Guild.Id, true);
+                    errorEmbed.AddField("Error", $"```{result.ErrorReason}```");
+
+                    await context.Message.Channel.SendMessageAsync(embed: errorEmbed.Build(), component: null);
+
+                    break;
+                case CommandResult:
+
+                    if (result.IsSuccess)
+                    {
+                        if (!string.IsNullOrEmpty(result.ErrorReason))
+                            await context.Channel.SendMessageAsync(result.ErrorReason);
+                        return;
+                    }
+
+                    if (result.IsSuccess || result.Error == CommandError.UnknownCommand)
+                        return;
+
+                    break;
             }
-
-            if (result.IsSuccess || result.Error == CommandError.UnknownCommand)
-                return;
-
-            EmbedBuilder errorEmbed = new()
-            {
-                Title = "Command Failed",
-                Description = $"**Reason:** {result.ErrorReason}",
-                Color = new(207, 102, 121)
-            };
-
-            await context.Message.Channel.SendMessageAsync(embed: errorEmbed.Build(), component: null);
         }
     }
 }
