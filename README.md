@@ -17,6 +17,26 @@ Updates will be posted in the [Announcements category in the GitHub repository](
 ## Contributing
 Want to contribute to CustomCommandBot? Go ahead.
 
+### Cloning
+Clone the repo like so:
+```
+$ git clone https://github.com/RealSGII2/CustomCommandBot.git
+```
+
+### Prerequisites
+- Visual Studio at its latest preview, with the **ASP.net and web development** package.
+- .NET 6 Preview 5 SDK installed
+
+### Testing
+To get started with testing, you'll need an Application connected to a bot account. Once you've created one, create a `secrets.yaml` file in `Sever/Config`. Give it the content shown here:
+```yaml
+bot_token: your-token-here
+```
+
+Replace the values nessecary to run the application.
+
+Once you're finished, run `CustomCommandBot.Server` and you're good to go. The databases will be created automatically if they do not exist.
+
 ### Editing the website
 #### Styling
 The website's styling is written in Sass to make writing styles much easier and efficient. If you're going to be editing styling, you'll
