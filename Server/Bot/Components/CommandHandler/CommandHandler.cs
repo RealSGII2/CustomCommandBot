@@ -92,10 +92,12 @@ namespace CustomCommandBot.Server.Bot.Components.CommandHandler
             {
                 case CommandExceptionResult:
 
+                    string issueURL = "https://github.com/RealSGII2/CustomCommandBot/issues/new?assignees=&labels=bug&template=bug-report.md&title=bug%3A+";
+
                     EmbedBuilder errorEmbed = new()
                     {
                         Title = "Command Failed",
-                        Description = "Oops! That wasn't supposed to happen. Please make a [new issue](https://github.com/RealSGII2/CustomCommandBot/issues/new) on our GitHub following the provided format.",
+                        Description = $"Oops! That wasn't supposed to happen. Please make a [new issue]({issueURL}) on our GitHub following the provided format.",
                         Color = new(207, 102, 121)
                     };
 
