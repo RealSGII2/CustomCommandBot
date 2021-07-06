@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CustomCommandBot.Shared.Models.CommandActions
 {
-    public class ReplyInChannelAction : ReplyAction
+    public class SendToChannelAction : ReplyAction
     {
         public ulong ChannelID { get; init; }
 
