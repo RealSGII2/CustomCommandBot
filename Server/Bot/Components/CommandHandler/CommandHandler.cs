@@ -95,13 +95,13 @@ namespace CustomCommandBot.Server.Bot.Components.CommandHandler
                     EmbedBuilder errorEmbed = new()
                     {
                         Title = "Command Failed",
-                        Description = "Please make a [new issue](https://github.com/RealSGII2/CustomCommandBot/issues/new) on our GitHub following the provided format.",
+                        Description = "Oops! That wasn't supposed to happen. Please make a [new issue](https://github.com/RealSGII2/CustomCommandBot/issues/new) on our GitHub following the provided format.",
                         Color = new(207, 102, 121)
                     };
 
-                    errorEmbed.AddField("Error", result.ErrorReason);
-                    errorEmbed.AddField("Executor ID", context.User.Id);
-                    errorEmbed.AddField("Guild ID", context.Guild.Id);
+                    errorEmbed.AddField("Executor ID", context.User.Id, true);
+                    errorEmbed.AddField("Guild ID", context.Guild.Id, true);
+                    errorEmbed.AddField("Error", $"```{result.ErrorReason}```");
 
                     await context.Message.Channel.SendMessageAsync(embed: errorEmbed.Build(), component: null);
 
