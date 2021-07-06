@@ -15,6 +15,9 @@ obj
 # User-specific files (databases)
 Databases/
 
+# User-specific files (secrets)
+secrets.yaml
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

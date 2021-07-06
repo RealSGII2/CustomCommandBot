@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using CustomCommandBot.Server.Bot;
 
 namespace CustomCommandBot.Server
 {
@@ -15,7 +16,11 @@ namespace CustomCommandBot.Server
         {
             Configuration = configuration;
 
+            // Make types able to be serialised in the database
             TypeSerialisationRegisterer.SerialiseDatabaseTypes();
+
+            // Start the bot
+            DiscordClient.Start();
         }
 
         public IConfiguration Configuration { get; }
