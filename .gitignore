@@ -12,6 +12,9 @@
 
 obj
 
+# User-specific files (databases)
+Databases/
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
