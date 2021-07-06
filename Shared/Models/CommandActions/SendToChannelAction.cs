@@ -10,10 +10,10 @@ namespace CustomCommandBot.Shared.Models.CommandActions
         public ulong ChannelID { get; init; }
 
         [BsonIgnore]
-        public override async Task<CommandActionResult> OnExecute(CommandContext context)
+        public override async Task<CommandActionResult> OnExecute(SocketCommandContext context)
         {
             var channel = await context.Client.GetChannelAsync(ChannelID) as ITextChannel;
-            await channel.SendMessageAsync(text: Content, embed: Embed.Build());
+            await channel.SendMessageAsync(text: Content, embed: Embed?.Build());
 
             return CommandActionResult.FromSuccess();
         }

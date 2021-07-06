@@ -22,9 +22,9 @@ namespace CustomCommandBot.Shared.Models.CommandActions
         public EmbedBuilder Embed { get; init; }
 
         [BsonIgnore]
-        public virtual async Task<CommandActionResult> OnExecute(CommandContext context)
+        public virtual async Task<CommandActionResult> OnExecute(SocketCommandContext context)
         {
-            await context.Channel.SendMessageAsync(text: Content, embed: Embed.Build());
+            await context.Channel.SendMessageAsync(text: Content, embed: Embed?.Build());
             return CommandActionResult.FromSuccess();
         }
     }

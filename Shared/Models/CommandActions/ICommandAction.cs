@@ -24,6 +24,6 @@ namespace CustomCommandBot.Shared.Models.CommandActions
         /// <param name="ctx">The CommandContext of the command running this action</param>
         /// <returns>A result indicating an error or success.</returns>
         [BsonIgnore]
-        public Task<CommandActionResult> OnExecute(CommandContext ctx);
+        public Task<CommandActionResult> OnExecute(SocketCommandContext ctx);
     }
 }

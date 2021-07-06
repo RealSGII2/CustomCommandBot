@@ -1,4 +1,7 @@
-﻿using Discord;
+﻿using CustomCommandBot.Server.Extentions;
+using CustomCommandBot.Shared.Models;
+using CustomCommandBot.Shared.Models.CommandActions;
+using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
@@ -43,36 +46,43 @@ namespace CustomCommandBot.Server.Bot.Components.CommandHandler
         {
             var message = _message as SocketUserMessage;
 
-            if (message is null)
-                return;
-
-            int argPosition = 0;
-
-            if (!message.HasCharPrefix('!', ref argPosition) || message.Author.IsBot)
+            if (message is null || message.Author.IsBot)
                 return;
 
             SocketCommandContext context = new(Client, message);
 
-            var result = await CommandService.ExecuteAsync(
-                context: context,
-                argPos: argPosition,
-                services: null
-            );
+            // Check if custom commands
+            var results = context.Guild.GetCommands().Where(command =>
+                (command.TriggerType == CommandTriggerType.BeginsWith && message.Content.StartsWith(command.Trigger)) ||
+                (command.TriggerType == CommandTriggerType.EndsWith && message.Content.EndsWith(command.Trigger)) ||
+                (command.TriggerType == CommandTriggerType.Contains && message.Content.Contains(command.Trigger))
+            ).ToList();
 
-           /* if (!result.IsSuccess && result.Error is not CommandError.UnknownCommand)
+            if (results.Count == 0)
             {
-                EmbedBuilder errorEmbed = new()
-                {
-                    Author = new()
-                    {
-                        Name = "Command Failed"
-                    },
-                    Description = $"**Reason:** {result.ErrorReason}",
-                    Color = new(207, 102, 121)
-                };
+                // Nope, check if bot command
+                int argPosition = 0;
 
-                await message.Channel.SendMessageAsync(embed: errorEmbed.Build(), component: null);
-            }*/
+                // Check if it starts with `!`
+                if (!message.HasCharPrefix('!', ref argPosition))
+                    return;
+
+                var result = await CommandService.ExecuteAsync(
+                    context: context,
+                    argPos: argPosition,
+                    services: null
+                );
+            }
+            else
+            {
+                // Yes, it is a custom command
+                var command = results[0];
+
+                foreach (ICommandAction action in command.Actions)
+                {
+                    await action.OnExecute(context);
+                }
+            }
         }
 
         private async Task OnCommandExecuted(Optional<CommandInfo> command, ICommandContext context, IResult result)

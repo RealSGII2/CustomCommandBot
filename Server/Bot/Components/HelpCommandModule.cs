@@ -1,4 +1,7 @@
 ﻿using CustomCommandBot.Server.Bot.Components.CommandHandler;
+using CustomCommandBot.Server.Extentions;
+using CustomCommandBot.Shared.Models;
+using CustomCommandBot.Shared.Models.CommandActions;
 using Discord.Commands;
 using System;
 using System.Collections.Generic;
@@ -15,6 +18,27 @@ namespace CustomCommandBot.Server.Bot.Components
         public async Task<RuntimeResult> TestCommand()
         {
             return CommandResult.FromError("Unimplemented.");
+        }
+
+        [Command("add-test-command")]
+        [Summary("Add a command to test the bot")]
+        [RequireOwner]
+        public async Task<RuntimeResult> AddTestCommand()
+        {
+            Context.Guild.AddCommand(new()
+            {
+                Trigger = "!test",
+                TriggerType = CommandTriggerType.BeginsWith,
+                Actions = new()
+                {
+                    new ReplyAction()
+                    {
+                        Content = "Test succeeded."
+                    }
+                }
+            });
+
+            return CommandResult.FromSuccess("`!test` command added.");
         }
     }
 }
