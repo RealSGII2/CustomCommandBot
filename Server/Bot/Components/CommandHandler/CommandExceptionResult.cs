@@ -8,11 +8,14 @@ namespace CustomCommandBot.Server.Bot.Components.CommandHandler
 {
     public class CommandExceptionResult : RuntimeResult
     {
-        public CommandExceptionResult(CommandError? error, string reason) : base(error, reason)
+        public readonly CommandFailureException Exception;
+
+        public CommandExceptionResult(CommandFailureException exception) : base(CommandError.Unsuccessful, exception.Message)
         {
+            Exception = exception;
         }
 
-        public static CommandExceptionResult FromError(string reason) =>
-            new(CommandError.Unsuccessful, reason);
+        public static CommandExceptionResult FromError(CommandFailureException exception) =>
+            new(exception);
     }
 }

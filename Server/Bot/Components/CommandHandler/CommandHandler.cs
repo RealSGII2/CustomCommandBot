@@ -1,4 +1,5 @@
-﻿using CustomCommandBot.Server.Extentions;
+﻿using CustomCommandBot.Server.Bot.Components.Logging;
+using CustomCommandBot.Server.Extentions;
 using CustomCommandBot.Shared.Models;
 using CustomCommandBot.Shared.Models.CommandActions;
 using Discord;
@@ -92,6 +93,10 @@ namespace CustomCommandBot.Server.Bot.Components.CommandHandler
             {
                 case CommandExceptionResult:
 
+                    var exception = (result as CommandExceptionResult).Exception;
+
+                    await new ExceptionLog(exception, context as SocketCommandContext).Send();
+
                     string issueURL = "https://github.com/RealSGII2/CustomCommandBot/issues/new?assignees=&labels=bug&template=bug-report.md&title=bug%3A+";
 
                     EmbedBuilder errorEmbed = new()
@@ -103,7 +108,7 @@ namespace CustomCommandBot.Server.Bot.Components.CommandHandler
 
                     errorEmbed.AddField("Executor ID", context.User.Id, true);
                     errorEmbed.AddField("Guild ID", context.Guild.Id, true);
-                    errorEmbed.AddField("Error", $"```{result.ErrorReason}```");
+                    errorEmbed.AddField("Error", $"```{exception}```");
 
                     await context.Message.Channel.SendMessageAsync(embed: errorEmbed.Build(), component: null);
 
