@@ -94,21 +94,24 @@ namespace CustomCommandBot.Server.Bot.Components.CommandHandler
                 case CommandExceptionResult:
 
                     var exception = (result as CommandExceptionResult).Exception;
+                    var errorCode = exception.GetErrorCode(context.Guild.Id);
 
-                    await new ExceptionLog(exception, context as SocketCommandContext).Send();
+                    var log = new ExceptionLog(exception, context as SocketCommandContext);
+                    log.AddErrorCode(errorCode);
+                    await log.Send();
 
                     string issueURL = "https://github.com/RealSGII2/CustomCommandBot/issues/new?assignees=&labels=bug&template=bug-report.md&title=bug%3A+";
 
                     EmbedBuilder errorEmbed = new()
                     {
                         Title = "Command Failed",
-                        Description = $"Oops! That wasn't supposed to happen. Please make a [new issue]({issueURL}) on our GitHub following the provided format.",
+                        Description = $"Oops! That wasn't supposed to happen. Please make a [new issue]({issueURL}) on our GitHub, providing the error code below.",
                         Color = new(207, 102, 121)
                     };
 
-                    errorEmbed.AddField("Executor ID", context.User.Id, true);
-                    errorEmbed.AddField("Guild ID", context.Guild.Id, true);
-                    errorEmbed.AddField("Error", $"```{exception}```");
+                    errorEmbed.AddField("Error Code", $"```{errorCode}```");
+                    errorEmbed.AddField("Message (do not include in bug report)", $"```{exception.Message}```");
+
 
                     await context.Message.Channel.SendMessageAsync(embed: errorEmbed.Build(), component: null);
 

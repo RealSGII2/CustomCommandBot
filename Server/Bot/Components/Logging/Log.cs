@@ -85,12 +85,6 @@ namespace CustomCommandBot.Server.Bot.Components.Logging
                     Value = Context.Guild.Id,
                     IsInline = true
                 });
-
-                embed.AddField(new EmbedFieldBuilder()
-                {
-                    Name = "Command Used Like",
-                    Value = $"```{Context.Message.Content}```"
-                });
             }
 
             if (message is not null)
