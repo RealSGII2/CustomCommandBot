@@ -11,12 +11,12 @@ assignees: ''
 Yes / No
 
 ### If this is related to a `Command Failed` error, please provide the following information:
-**Executor ID:** `123`
-**Guild ID:** `321`
-**Error:**
+**Error Code:**
 ```
-The error goes here.
+The error code goes here.
 ```
+
+### If this isn't related to a `Command Failed` error, please provide what went wrong, and what should've happened.
 
 ### How did you get this issue? List all steps for a proper reproduction.
 1. Run `!command`
