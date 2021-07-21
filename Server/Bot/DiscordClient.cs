@@ -1,29 +1,33 @@
 ﻿using CustomCommandBot.Server.Bot.Components.CommandHandler;
 using CustomCommandBot.Server.Components;
 using CustomCommandBot.Server.Config.Models;
+using CustomCommandBot.Shared.Models.Discord;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CustomCommandBot.Server.Bot
 {
     public class DiscordClient
     {
-        private DiscordSocketClient Client;
+        public DiscordSocketClient Client;
         private CommandService CommandService;
 
-        public static void Start()
-            => new DiscordClient().Create().GetAwaiter().GetResult();
-
-        public async Task Create()
+        public DiscordClient()
         {
             Client = new();
-
             Client.Log += Log;
 
+            Start();
+        }
+
+        private async Task Start()
+        {
             string token = ConfigReader.ReadConfigFile<SecretsConfig>(@"Config/secrets.yaml").BotToken;
 
             await Client.LoginAsync(TokenType.Bot, token);
@@ -36,10 +40,10 @@ namespace CustomCommandBot.Server.Bot
 
             var provider = ConfigureServices();
             await provider.GetRequiredService<CommandHandler>().Setup();
-            
-
-            // await Task.Delay(-1);
         }
+
+        public List<ulong> GetGuildIds()
+            => Client.Guilds.Select(g => g.Id).ToList();
 
         private IServiceProvider ConfigureServices()
          => new ServiceCollection()

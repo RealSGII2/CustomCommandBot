@@ -1,4 +1,5 @@
 ﻿using CustomCommandBot.Server.Bot.Components.Logging;
+using CustomCommandBot.Server.Bot.Components.CommandModules;
 using CustomCommandBot.Server.Extentions;
 using CustomCommandBot.Shared.Models;
 using CustomCommandBot.Shared.Models.CommandActions;
@@ -41,6 +42,7 @@ namespace CustomCommandBot.Server.Bot.Components.CommandHandler
             CommandService.CommandExecuted += OnCommandExecuted;
 
             await CommandService.AddModuleAsync<HelpCommandModule>(Services);
+            await CommandService.AddModuleAsync<UtilModule>(Services);
         }
 
         private async Task OnMessage(SocketMessage _message)
