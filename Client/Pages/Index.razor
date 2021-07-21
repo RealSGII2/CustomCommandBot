@@ -3,102 +3,262 @@
 
 @using CustomCommandBot.Shared.Models.Discord
 
-<div class="heroHeader">
-	<div class="content flexed">
-		<div class="left">
+<div class="heroBanner"></div>
+
+<div class="content" style="margin-top: 3rem">
+	<div class="row">
+		<div class="col-sm-12 col-md-6 col-lg-5 heroLeft">
 			<h2>
-				Your own bot.<br />
+				Your bot.<br />
 				Without the code.
 			</h2>
-			<p class="heroText">
-				RBot is a fully customiseable bot that allows you to create your own high advanced commands.
+
+			<div class="flexRow featureList">
+				<div>
+					<div>
+						<i data-feather="sliders"></i>
+					</div>
+					<span>
+						Fully customisable
+					</span>
+				</div>
+
+				<div>
+					<div>
+						<i data-feather="book"></i>
+					</div>
+					<span>
+						Documented
+					</span>
+				</div>
+
+				<div>
+					<div>
+						<i data-feather="users"></i>
+					</div>
+					<span>
+						User friendly
+					</span>
+				</div>
+
+				<div>
+					<div>
+						<i data-feather="dollar-sign"></i>
+					</div>
+					<span>
+						No strict paywalls
+					</span>
+				</div>
+			</div>
+
+			<div class="flexRow buttonRow">
+				<button class="cta hero">
+					<span>Get started</span>
+				</button>
+
+				<button class="outlined hero">
+					<span>How it works</span>
+				</button>
+			</div>
+		</div>
+
+		<div class="col-sm-12 col-md-6 col-lg-7 heroRight">
+			<div class="discordMock">
+				<div class="message">
+					<img src="https://discord.com/assets/c09a43a372ba81e3018c3151d4ed4773.png" alt="" class="avatar">
+					<div class="messageContent">
+						<h4 class="username blue">foobar123 <span class="timestamp">Today at 17:00</span></h4>
+						<div class="text">
+							!my-custom-command
+						</div>
+					</div>
+				</div>
+
+				<div class="message groupStart">
+					<img src="https://cdn.discordapp.com/icons/861777754295107624/34d942cae9f435f9a98f15dfb1ca39be.webp?size=128"
+						alt="" class="avatar">
+					<div class="messageContent">
+						<h4 class="username">CustomCommandBot <span class="timestamp">Today at 17:00</span></h4>
+						<div class="text">
+							Hi! This command has been ran <b>2 times</b>, and the current executor is
+							<b>foobar123#8927</b>.
+						</div>
+					</div>
+				</div>
+
+				<div class="message groupStart">
+					<img src="https://discord.com/assets/c09a43a372ba81e3018c3151d4ed4773.png" alt="" class="avatar">
+					<div class="messageContent">
+						<h4 class="username blue">foobar123 <span class="timestamp">Today at 17:00</span></h4>
+						<div class="text">
+							!my-custom-command test args
+						</div>
+					</div>
+				</div>
+
+				<div class="message groupStart">
+					<img src="https://cdn.discordapp.com/icons/861777754295107624/34d942cae9f435f9a98f15dfb1ca39be.webp?size=128"
+						alt="" class="avatar">
+					<div class="messageContent">
+						<h4 class="username">CustomCommandBot <span class="timestamp">Today at 17:00</span></h4>
+						<div class="text">
+							Hi! This command has been ran <b>3 times</b>, and the current executor is
+							<b>foobar123#8927</b>. Arguments provided: 1: test; 2: args
+						</div>
+					</div>
+				</div>
+
+				<div class="messageBar">You do not have permission to send messages in this channel.</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="heroSpace"></div>
+
+	<div class="row">
+		<div class="col-sm-12 col-md-6 col-lg-5 heroLeftAlt">
+			<h3>With everything you need:</h3>
+			<div class="flexList featureList">
+				<div>
+					<div>
+						<i data-feather="circle" stroke-dasharray="4 6"></i>
+					</div>
+					<span>
+						Variables
+					</span>
+				</div>
+
+				<div>
+					<div>
+						<i data-feather="terminal"></i>
+					</div>
+					<span>
+						In-line evaluations
+					</span>
+				</div>
+
+				<div>
+					<div>
+						<i data-feather="log-in"></i>
+					</div>
+					<span>
+						Arguments
+					</span>
+				</div>
+
+				<div>
+					<div>
+						<i data-feather="sliders"></i>
+					</div>
+					<span>
+						Flexible command triggers
+					</span>
+				</div>
+
+				<div>
+					<div>
+						<i data-feather="user-x"></i>
+					</div>
+					<span>
+						Preconditions
+					</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-sm-12 col-md-6 col-lg-7 heroRight">
+			<div class="modalMock">
+				<header>
+					Command Preview
+				</header>
+				<main>
+					<label class="fakeLabel">Trigger</label>
+					<div class="fakeInput">
+						!my-custom-command
+					</div>
+
+					<label class="fakeLabel">Trigger type</label>
+					<div class="fakeInput">
+						Begins with
+					</div>
+
+					<label class="fakeLabel">Responds with</label>
+					<div class="fakeInput">
+						Hi! This command has been ran **<code>count</code> times**, and the current executor is
+						**<code>author.tag</code>**. <code>args.count and "Arguments provided:"</code>
+						<code>args:join("{index + 1}: {value}", "; ")</code>
+					</div>
+
+					<div class="flexRow">
+						<div class="spacer"></div>
+						<button class="outlined">
+							<span>See all variables</span>
+							<span>
+								<i data-feather="external-link"></i>
+							</span>
+						</button>
+
+						<button class="cta">
+							<span>Try it out</span>
+							<span>
+								<i data-feather="arrow-right"></i>
+							</span>
+						</button>
+					</div>
+				</main>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- <div class="heroBorder"></div> -->
+
+<div class="content flexedCenter padded" style="margin-top: 2rem">
+	<h2 class="center">
+		Built to work with newbies
+	</h2>
+
+	<p class="heroText center">
+		It doesn't matter if you're experienced with Discord or not. Our documentation and easy-to-use interface are
+		built for everyone to know how to use, even if they've just signed up today.
+	</p>
+
+	<button class="hero outlined">
+		<span>Visit documentation</span>
+	</button>
+</div>
+
+<div class="content padded" style="margin-top: 2rem">
+	<div class="row padded">
+		<div class="col-sm-12 col-md-6 flexedCenter">
+			<h2 class="smallDisplay center">
+				No unnecessary paywalls
+			</h2>
+
+			<p class="heroText center">
+				We believe anyone should be able to use this bot for what they need, for free. Your limits are
+				determined by what most people need. As long as you're not going over-the-top, you'll be able to remain
+				free.
 			</p>
-			<div class="flexRow">
-				@if (user is not null)
-				{
-					<button @onclick='() => NavManager.NavigateTo("/dashboard")' class="large cta">
-						<span>Go to dashboard</span>
-					</button>
-				}
-				else
-				{
-					<a href="/auth/login" class="large cta asButton">
-						<span>Log in</span>
-					</a>
-				}
-				<button class="large">Features</button>
-			</div>
-		</div>
-		<div class="right"></div>
-	</div>
-</div>
 
-<div class="content withVertPadding flexed heroHeader">
-	<div class="left">
-		<h2>
-			How it works
-		</h2>
-		<div class="list heroText">
-			<div><span class="bullet">•</span>Make a command with any sort of invocation. Make flexible commands using
-				different types of detection.</div>
-			<div><span class="bullet">•</span>Give it actions. Send a message, embed, image in the same or different
-				channel, give roles, use arguments, and even program your own logic in.</div>
-			<div><span class="bullet">•</span>Give it options. Unique cooldowns, required permissions, and even a custom
-				permission system.</div>
-			<div><span class="bullet">•</span>Save. Anyone will be able to use the command, as long as they follow the
-				requirements you've set on it.</div>
+			<button class="large outlined">
+				<span>See pricing</span>
+			</button>
 		</div>
 
-		<div class="space"></div>
+		<div class="col-sm-12 col-md-6 flexedCenter">
+			<h2 class="smallDisplay center">
+				Made to fit your needs
+			</h2>
 
-		<button class="cta">Try it out</button>
-	</div>
-	<div class="right"></div>
-</div>
+			<p class="heroText center">
+				The principal idea for CCB is customisability. If you can't find what you need using our UI, you have
+				the option to use your own code for it in Lua, a beginner-friendly programming language.
+			</p>
 
-<div class="content withVertPadding flexed heroHeader">
-	<div class="left">
-		<h2>
-			Why RBot?
-		</h2>
-		<div class="list heroText">
-			<div><span class="bullet">•</span>Our goal is to make sure you can use the essential features of RBot
-				completely free, while allowing donations to help keep it online.</div>
-
-			<div><span class="bullet">•</span>The interface is designed for maximum user friendliness, so you don't have
-				to spend a few hours looking at documentation.</div>
-		</div>
-	</div>
-	<div class="right"></div>
-</div>
-
-<div class="footer">
-	<div class="first">
-		<div class="content flexed">
-			<span class="appTitle">RBot</span>
-
-			<div class="spacer"></div>
-
-			<button class="cta">Invite</button>
-		</div>
-	</div>
-
-	<div class="second">
-		<div class="content">
-			<p class="heroText">Your own bot. Without the code.</p>
-			<div class="flexRow footerRow">
-				<div class="footerCol">
-					<p class="displayText">Resources</p>
-					<a href="#">Documentation</a>
-					<a href="#">Support</a>
-				</div>
-
-				<div class="footerCol">
-					<p class="displayText">Product</p>
-					<a href="#">Open Source</a>
-					<a href="#">Acknowledgements</a>
-				</div>
-			</div>
+			<button class="large outlined">
+				<span>See all actions</span>
+			</button>
 		</div>
 	</div>
 </div>

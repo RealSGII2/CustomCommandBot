@@ -4,30 +4,37 @@
 @inject HttpClient httpClient
 
 <nav class="appbar">
-	<img src="https://cdn.realsgii2.dev/ccb/icon_small.png" class="appIcon" />
+	<div class="content">
+		<section>
+			<span class="appIcon">CCB</span>
 
-	<div class="spacer"></div>
+			<button class="menuButton ghost" data-open-menu>
+				<i data-feather="menu"></i>
+			</button>
+		</section>
 
-	<a href="/">Home</a>
+		<section class="menuItems">
+			<a href="/" class="active">Home</a>
 
-	<a href="/docs">Documentation</a>
+			<a href="/pricing.html">Pricing</a>
 
-	<a href="/link/support">Support</a>
+			<a href="/docs.html">Documentation</a>
 
-	@if (User is null)
-	{
-		<a class="cta large asButton" href="/auth/login">
-			<span>Log in</span>
-		</a>
-	}
-	else
-	{
-		<a href="/dashboard">My Servers</a>
+			<a href="#">Support</a>
 
-		<a href="/dashboard/profile" class="appbarProfile">
-			<img src=@User.AvatarUrl />
-		</a>
-	}
+			<div class="optSpacer"></div>
+
+			<button class="cta">
+				<span>Log in</span>
+			</button>
+
+			<button class="menuButton ghost" data-close-menu>
+				<i data-feather="x"></i>
+			</button>
+		</section>
+
+		<div class="scrim"></div>
+	</div>
 </nav>
 
 @code {
@@ -36,7 +43,8 @@
 	[Parameter]
 	public User User { get; set; }
 
-	private void LogIn() {
+	private void LogIn()
+	{
 		if (User is null)
 			NavManager.NavigateTo(loginUri);
 	}
