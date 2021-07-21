@@ -1,4 +1,36 @@
-﻿@inherits LayoutComponentBase
+﻿@using CustomCommandBot.Client.Models
+@using CustomCommandBot.Shared.Models.Discord
 
-<NavMenu />
-@Body
+@inject HttpClient httpClient
+@inject NavigationManager navManager
+
+@inherits LayoutComponentBase
+
+@using Newtonsoft.Json
+
+<NavMenu User=@user />
+<CascadingValue Value=@user Name="CurrentUser">
+    @Body
+</CascadingValue>
+
+@code {
+	private User user { get; set; }
+
+	protected override async Task OnParametersSetAsync()
+	{
+		await SetUserAsync();
+	}
+
+	private async Task SetUserAsync() {
+		HttpRequestMessage req = new(HttpMethod.Get, "/auth/@me");
+		var result = await httpClient.SendAsync(req);
+
+		if (result.IsSuccessStatusCode)
+		{
+			user = JsonConvert.DeserializeObject<User>(await result.Content.ReadAsStringAsync(), new JsonSerializerSettings()
+			{
+				TypeNameHandling = TypeNameHandling.All
+			});
+		}
+	}
+}
