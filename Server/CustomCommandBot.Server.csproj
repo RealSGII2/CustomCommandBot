@@ -6,10 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="AspNet.Security.OAuth.Discord" Version="5.0.8" />
-    <PackageReference Include="Discord.Net.Labs" Version="2.4.3" />
-    <PackageReference Include="Discord.Net.Labs.Commands" Version="2.3.5" />
-    <PackageReference Include="Discord.Net.Labs.Core" Version="2.4.1" />
-    <PackageReference Include="Discord.Net.Labs.WebSocket" Version="2.4.3" />
+    <PackageReference Include="Discord.Net.Labs" Version="2.4.9" />
     <PackageReference Include="IdentityServer4" Version="4.1.2" />
     <PackageReference Include="LiteDB" Version="5.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.7" />
