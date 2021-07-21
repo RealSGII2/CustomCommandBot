@@ -1,6 +1,6 @@
 # CustomCommandBot
-A fully customiseable bot developed by [RealSGII2](https://github.com/RealSGII2) and [Blackcatmaxy](https://github.com/Blackcatmaxy),
-developed using .NET 6 and Blazor WASM in C#.
+A fully customiseable bot developed by [RealSGII2](https://github.com/RealSGII2), [Blackcatmaxy](https://github.com/Blackcatmaxy),
+and [Clerically](https://github.com/clerically), developed using .NET 6 and Blazor WASM in C#.
 
 ## Usage
 - The bot may not be invited at this moment.
@@ -15,7 +15,7 @@ Updates will be posted in the [Announcements category in the GitHub repository](
 - Bugs may be submitted to the [Issue Tracker on Github](https://github.com/RealSGII2/CustomCommandBot/issues).
 
 ## Contributing
-Want to contribute to CustomCommandBot? Go ahead.
+Want to contribute to CustomCommandBot? Go ahead, all contributions are welcome.
 
 ### Cloning
 Clone the repo like so:

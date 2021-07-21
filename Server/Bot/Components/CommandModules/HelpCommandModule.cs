@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CustomCommandBot.Server.Bot.Components
+namespace CustomCommandBot.Server.Bot.Components.CommandModules
 {
     public class HelpCommandModule : ModuleBase<SocketCommandContext>
     {
@@ -17,7 +17,7 @@ namespace CustomCommandBot.Server.Bot.Components
         [Alias("commands", "cmds")]
         public async Task<RuntimeResult> TestCommand()
         {
-            return CommandResult.FromError("Unimplemented.");
+            return CommandExceptionResult.FromError(new("Command not implemented", Environment.StackTrace));
         }
 
         [Command("add-test-command")]
