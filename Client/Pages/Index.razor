@@ -1,4 +1,7 @@
 ﻿@page "/"
+@inject NavigationManager NavManager
+
+@using CustomCommandBot.Shared.Models.Discord
 
 <div class="heroHeader">
 	<div class="content flexed">
@@ -11,7 +14,18 @@
 				RBot is a fully customiseable bot that allows you to create your own high advanced commands.
 			</p>
 			<div class="flexRow">
-				<button class="large cta">Invite</button>
+				@if (user is not null)
+				{
+					<button @onclick='() => NavManager.NavigateTo("/dashboard")' class="large cta">
+						<span>Go to dashboard</span>
+					</button>
+				}
+				else
+				{
+					<a href="/auth/login" class="large cta asButton">
+						<span>Log in</span>
+					</a>
+				}
 				<button class="large">Features</button>
 			</div>
 		</div>
@@ -88,3 +102,8 @@
 		</div>
 	</div>
 </div>
+
+@code {
+	[CascadingParameter(Name = "CurrentUser")]
+	protected User user { get; set; }
+}

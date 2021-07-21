@@ -1,15 +1,43 @@
-﻿<nav class="appbar">
-	<span class="appTitle">
-		RBot
-	</span>
+﻿@using CustomCommandBot.Shared.Models.Discord
+
+@inject NavigationManager NavManager
+@inject HttpClient httpClient
+
+<nav class="appbar">
+	<img src="https://cdn.realsgii2.dev/ccb/icon_small.png" class="appIcon" />
 
 	<div class="spacer"></div>
 
-	<a href="#">Documentation</a>
+	<a href="/">Home</a>
 
-	<a href="#">Support</a>
+	<a href="/docs">Documentation</a>
 
-	<button class="cta large">
-		<span>Invite</span>
-	</button>
+	<a href="/link/support">Support</a>
+
+	@if (User is null)
+	{
+		<a class="cta large asButton" href="/auth/login">
+			<span>Log in</span>
+		</a>
+	}
+	else
+	{
+		<a href="/dashboard">My Servers</a>
+
+		<a href="/dashboard/profile" class="appbarProfile">
+			<img src=@User.AvatarUrl />
+		</a>
+	}
 </nav>
+
+@code {
+	private string loginUri = "/auth/login";
+
+	[Parameter]
+	public User User { get; set; }
+
+	private void LogIn() {
+		if (User is null)
+			NavManager.NavigateTo(loginUri);
+	}
+}

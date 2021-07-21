@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 
 namespace CustomCommandBot.Client
 {
@@ -16,8 +17,11 @@ namespace CustomCommandBot.Client
     {
         public static async Task Main(string[] args)
         {
-            // discover endpoints from metadata
-            var client = new HttpClient();
+            HttpClientHandler handler = new()
+            {
+                AllowAutoRedirect = false
+            };
+            HttpClient client = new(handler);
 
             var disco = await client.GetDiscoveryDocumentAsync(new DiscoveryDocumentRequest() { 
                 Address = "https://localhost:5001"
@@ -28,44 +32,10 @@ namespace CustomCommandBot.Client
                 return;
             }
 
-            // request token
-            var tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
-            {
-                Address = disco.TokenEndpoint,
-                ClientId = "client",
-                ClientSecret = "secret",
-
-                Scope = "api1"
-            });
-
-            if (tokenResponse.IsError)
-            {
-                Console.WriteLine(tokenResponse.Error);
-                return;
-            }
-
-            Console.WriteLine(tokenResponse.AccessToken);
-            Console.WriteLine("\n\n");
-
-            // call api
-            var apiClient = new HttpClient();
-            apiClient.SetBearerToken(tokenResponse.AccessToken);
-
-            var response = await apiClient.GetAsync("https://localhost:5001/identity");
-            if (!response.IsSuccessStatusCode)
-            {
-                Console.WriteLine(response.StatusCode);
-            }
-            else
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(JArray.Parse(content));
-            }
-
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddScoped(sp => new HttpClient(handler) { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
             await builder.Build().RunAsync();
         }
