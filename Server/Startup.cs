@@ -133,7 +133,9 @@ namespace CustomCommandBot.Server
                     options.AllowInputFormatterExceptionMessages = false;
                 });
 
-            services.AddSingleton(sp => new DiscordClient());
+            DiscordClient client = new();
+
+            services.AddSingleton(sp => client);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

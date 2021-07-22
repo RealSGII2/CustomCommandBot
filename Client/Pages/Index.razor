@@ -2,113 +2,117 @@
 @inject NavigationManager NavManager
 
 @using CustomCommandBot.Shared.Models.Discord
+@*
+	<div class="heroBanner" style="height: 90vh;"></div> *@
 
-<div class="heroBanner"></div>
+<div class="content" style="margin-top: 5vh">
+	<div class="heroContent">
+		<div class="row" style="margin: 2.5vh 0">
+			<div class="col-sm-12 col-md-6 col-lg-5 heroLeft" style="align-self: center;">
+				<h1>
+					Your bot.<br />
+					Without the code.
+				</h1>
 
-<div class="content" style="margin-top: 3rem">
-	<div class="row">
-		<div class="col-sm-12 col-md-6 col-lg-5 heroLeft">
-			<h2>
-				Your bot.<br />
-				Without the code.
-			</h2>
+				<p class="heroText large muted" style="margin-right: 3rem">
+					Create your own advanced commands for your server to use using an "action" based editor similar to MEE6
+					custom commands. Built for everyone to use, starting out free.
+				</p>
 
-			<div class="flexRow featureList">
-				<div>
-					<div>
-						<i data-feather="sliders"></i>
-					</div>
-					<span>
-						Fully customisable
-					</span>
-				</div>
+				<div class="flexRow buttonRow" style="gap: 1rem;">
+					@if (user is null)
+					{
+						<a href="/auth/login">
+							<button class="cta hero">
+								<span>Get started</span>
+							</button>
+						</a>
+					}
+					else
+					{
+						<button class="cta hero" @onclick='() => NavManager.NavigateTo("/dashboard")'>
+							<span>Get started</span>
+						</button>
+					}
 
-				<div>
-					<div>
-						<i data-feather="book"></i>
-					</div>
-					<span>
-						Documented
-					</span>
-				</div>
-
-				<div>
-					<div>
-						<i data-feather="users"></i>
-					</div>
-					<span>
-						User friendly
-					</span>
-				</div>
-
-				<div>
-					<div>
-						<i data-feather="dollar-sign"></i>
-					</div>
-					<span>
-						No strict paywalls
-					</span>
+					<button class="outlined hero">
+						<span>How it works</span>
+					</button>
 				</div>
 			</div>
 
-			<div class="flexRow buttonRow">
-				<button class="cta hero">
-					<span>Get started</span>
-				</button>
-
-				<button class="outlined hero">
-					<span>How it works</span>
-				</button>
-			</div>
-		</div>
-
-		<div class="col-sm-12 col-md-6 col-lg-7 heroRight">
-			<div class="discordMock">
-				<div class="message">
-					<img src="https://discord.com/assets/c09a43a372ba81e3018c3151d4ed4773.png" alt="" class="avatar">
-					<div class="messageContent">
-						<h4 class="username blue">foobar123 <span class="timestamp">Today at 17:00</span></h4>
-						<div class="text">
-							!my-custom-command
+			<div class="col-sm-12 col-md-6 col-lg-7 heroRight">
+				<div class="discordMock">
+					<div class="message">
+						<img src="https://cdn.realsgii2.dev/primo/tbown.webp" alt=""
+							class="avatar">
+						<div class="messageContent">
+							<h4 class="username" style="color: #fdd093;">tbown <span class="timestamp">Today at 17:00</span></h4>
+							<div class="text">
+								!my-custom-command
+							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="message groupStart">
-					<img src="https://cdn.discordapp.com/icons/861777754295107624/34d942cae9f435f9a98f15dfb1ca39be.webp?size=128"
-						alt="" class="avatar">
-					<div class="messageContent">
-						<h4 class="username">CustomCommandBot <span class="timestamp">Today at 17:00</span></h4>
-						<div class="text">
-							Hi! This command has been ran <b>2 times</b>, and the current executor is
-							<b>foobar123#8927</b>.
+					<div class="message groupStart">
+						<img src="https://cdn.realsgii2.dev/primo/discord-avatar.png"
+							alt="" class="avatar">
+						<div class="messageContent">
+							<h4 class="username blue">Primo <span class="timestamp">Today at 17:00</span></h4>
+							<div class="text">
+								Hi! This command has been ran <b>2 times</b>, and the current executor is
+								<b>tbown#0777</b>.
+							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="message groupStart">
-					<img src="https://discord.com/assets/c09a43a372ba81e3018c3151d4ed4773.png" alt="" class="avatar">
-					<div class="messageContent">
-						<h4 class="username blue">foobar123 <span class="timestamp">Today at 17:00</span></h4>
-						<div class="text">
-							!my-custom-command test args
+					<div class="message groupStart">
+						<img src="https://cdn.realsgii2.dev/primo/tbown.webp" alt=""
+							class="avatar">
+						<div class="messageContent">
+							<h4 class="username" style="color: #fdd093;">tbown <span class="timestamp">Today at 17:00</span></h4>
+							<div class="text">
+								!my-custom-command test args
+							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="message groupStart">
-					<img src="https://cdn.discordapp.com/icons/861777754295107624/34d942cae9f435f9a98f15dfb1ca39be.webp?size=128"
-						alt="" class="avatar">
-					<div class="messageContent">
-						<h4 class="username">CustomCommandBot <span class="timestamp">Today at 17:00</span></h4>
-						<div class="text">
-							Hi! This command has been ran <b>3 times</b>, and the current executor is
-							<b>foobar123#8927</b>. Arguments provided: 1: test; 2: args
+					<div class="message groupStart">
+						<img src="https://cdn.realsgii2.dev/primo/discord-avatar.png"
+							alt="" class="avatar">
+						<div class="messageContent">
+							<h4 class="username blue">Primo <span class="timestamp">Today at 17:00</span></h4>
+							<div class="text">
+								Hi! This command has been ran <b>3 times</b>, and the current executor is
+								<b>tbown#0777</b>. Arguments provided: 1: test; 2: args
+							</div>
 						</div>
 					</div>
-				</div>
 
-				<div class="messageBar">You do not have permission to send messages in this channel.</div>
+					<div class="message groupStart">
+						<img src="https://cdn.realsgii2.dev/primo/tbown.webp" alt=""
+							class="avatar">
+						<div class="messageContent">
+							<h4 class="username" style="color: #fdd093;">tbown <span class="timestamp">Today at 17:01</span></h4>
+							<div class="text">
+								!help
+							</div>
+						</div>
+					</div>
+
+					<div class="message groupStart">
+						<img src="https://cdn.realsgii2.dev/primo/discord-avatar.png"
+							alt="" class="avatar">
+						<div class="messageContent">
+							<h4 class="username blue">Primo <span class="timestamp">Today at 17:01</span></h4>
+							<div class="text">
+								You may view <span class="fakeLink">https://primobot.xyz/commands/172119104092635136</span> for a list of commands <b>Berezaa Experiences</b> offers.
+							</div>
+						</div>
+					</div>
+
+					<div class="messageBar">You do not have permission to send messages in this channel.</div>
+				</div>
 			</div>
 		</div>
 	</div>

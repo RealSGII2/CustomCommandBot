@@ -6,7 +6,12 @@
 <nav class="appbar">
 	<div class="content">
 		<section>
-			<span class="appIcon">CCB</span>
+			<span class="appIcon">
+				<img src="https://cdn.realsgii2.dev/primo/branded-small-logo.png" alt="Primo">
+				<span>
+					Primo
+				</span>
+			</span>
 
 			<button class="menuButton ghost" data-open-menu>
 				<i data-feather="menu"></i>
@@ -16,17 +21,34 @@
 		<section class="menuItems">
 			<a href="/" class="active">Home</a>
 
-			<a href="/pricing.html">Pricing</a>
+			@* <a href="/pricing">Pricing</a> *@
 
-			<a href="/docs.html">Documentation</a>
+			@* <a href="/docs">Documentation</a> *@
 
-			<a href="#">Support</a>
+			<a href="/support">Support</a>
+
+			@if (User is not null)
+			{
+				<a href="/dashboard">My servers</a>
+			}
 
 			<div class="optSpacer"></div>
 
-			<button class="cta">
-				<span>Log in</span>
-			</button>
+			@if (User is null)
+			{
+				<a href="/auth/login" style="padding: 0;">
+					<button class="cta">
+						<span>Log in</span>
+					</button>
+				</a>
+			}
+			else
+			{
+				<a class="profileLink">
+					<img src=@User.AvatarUrl alt=@User.Username>
+					@User.Username
+				</a>
+			}
 
 			<button class="menuButton ghost" data-close-menu>
 				<i data-feather="x"></i>

@@ -104,20 +104,36 @@ nav.appbar {
     justify-content: center;
     height: 100%; }
   nav.appbar .appIcon {
-    font-size: 1.25rem; }
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; }
+    nav.appbar .appIcon img {
+      max-height: 36px; }
+    nav.appbar .appIcon span {
+      color: var(--theme-cta-light);
+      font-size: 1.25rem;
+      font-weight: 500; }
   nav.appbar .menuButton {
     display: none; }
   nav.appbar section {
     flex: 1 0 auto;
     display: inline-flex; }
     nav.appbar section.menuItems {
-      justify-content: flex-end; }
+      justify-content: flex-end;
+      align-items: center; }
   nav.appbar a {
     position: relative;
     padding: 0.625rem;
     color: var(--text-light);
     text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: fit-content;
     transition: 130ms ease-out; }
+    nav.appbar a img {
+      max-height: 36px;
+      border-radius: 999px; }
     nav.appbar a:hover {
       color: #fff; }
     nav.appbar a:last-of-type {
@@ -402,6 +418,7 @@ button:not(.removeDefault), .asButton {
           color: #707479; }
       .discordMock .message .messageContent .text {
         font-size: 0.875rem;
+        line-height: 1.375rem;
         color: #ccd6d4; }
   .discordMock .messageBar {
     margin: 1rem 1rem 0.5rem;
@@ -410,6 +427,16 @@ button:not(.removeDefault), .asButton {
     background-color: #3b3f45;
     color: #4b4f55;
     padding: 12px 18px; }
+  .discordMock .code {
+    background-color: #2f3136;
+    padding: 0.2em;
+    margin: -0.2em 0;
+    border-radius: 3px;
+    font-family: var(--font-mono); }
+  .discordMock .fakeLink {
+    color: #00aff4; }
+    .discordMock .fakeLink:hover {
+      text-decoration: underline; }
 
 .modalMock {
   border-radius: 6px;
@@ -442,11 +469,11 @@ button:not(.removeDefault), .asButton {
       opacity: 0.44;
       font-weight: normal !important; }
     .modalMock .fakeInput code::before {
-      content: "${";
+      content: '${';
       color: #fff;
       opacity: 0.24; }
     .modalMock .fakeInput code::after {
-      content: "}";
+      content: '}';
       color: #fff;
       opacity: 0.24; }
 
@@ -468,7 +495,7 @@ button:not(.removeDefault), .asButton {
   height: 1px;
   position: relative; }
   .heroBorder::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0%;
     left: 0;
@@ -488,7 +515,7 @@ button:not(.removeDefault), .asButton {
   position: relative;
   overflow: hidden; }
   .heroArea::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 20%;
     left: 0;
@@ -502,13 +529,13 @@ button:not(.removeDefault), .asButton {
   position: relative;
   padding-bottom: 6.5rem; }
   .heroContent::after {
-    content: "";
+    content: '';
     position: absolute;
     top: -200px;
     left: 50%;
     bottom: 0;
     width: 100vw;
-    transform: skewY(2.5deg) translate(-50%, 0);
+    transform: skewY(-1.5deg) translate(-50%, 0);
     z-index: -1;
     background-color: var(--background-primary-alt); }
 
@@ -542,7 +569,7 @@ button:not(.removeDefault), .asButton {
     border-radius: 999px;
     background-color: var(--background-primary-alt); }
     .meter div::after {
-      content: "";
+      content: '';
       position: absolute;
       top: 0;
       left: 0;
@@ -782,6 +809,9 @@ h4, h5, h6 {
 
 .muted {
   color: var(--text-muted); }
+
+.large {
+  font-size: 1.25em; }
 
 html,
 body {
