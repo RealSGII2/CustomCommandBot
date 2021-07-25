@@ -1,0 +1,63 @@
+﻿@inject IJSRuntime JavaScript
+
+@using CustomCommandBot.Shared.Utilities
+
+<label class="input">
+    <span>
+        @Label
+    </span>
+
+    <button class="input" @onclick="() => _isOpen = true">
+        @if (SelectValue is not 0)
+        {
+            <span>
+                @SelectValue
+            </span>
+        }
+        else
+        {
+            <span class="muted">
+                @Placeholder
+            </span>
+        }
+
+        <div class="spacer"></div>
+
+        <i data-feather="chevron-down"></i>
+    </button>
+
+    <div class=@($"dropdown {(_isOpen ? "open" : "closed")}")>
+        @for (int i = 0; i < Options.Count(); i++)
+        {
+            <button class=@(i == _selectIndex ? "active" : "") @onclick="() => SelectItem(i)">
+                @(Options.ToList()[i])
+            </button>
+        }
+    </div>
+</label>
+<div class=@($"inputScrim {(_isOpen ? "open" : "closed")}") @onclick="() => _isOpen = false"></div>
+
+@code {
+    [Parameter] public string Label { get; set; }
+    [Parameter] public string Placeholder { get; set; } = "Select...";
+
+    [Parameter] public ulong SelectValue { get; set; }
+    [Parameter] public EventCallback<ulong> SelectValueChanged { get; set; }
+
+    [Parameter] public IEnumerable<ulong> Options { get; set; } = new List<ulong>();
+
+    private int _selectIndex = -1;
+    private bool _isOpen = false;
+
+    private async Task SelectItem(int index)
+    {
+        _selectIndex = index;
+        await SelectValueChanged.InvokeAsync(Options.ToList()[index]);
+
+        _isOpen = false;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        await JavaScript.InvokeVoidAsync("renderIcons");
+    }
+}

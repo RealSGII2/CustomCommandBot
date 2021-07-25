@@ -1,0 +1,32 @@
+﻿<label class="input">
+    <span>
+        @Label
+    </span>
+    
+    @if (Limit != -1)
+    {
+        <textarea maxlength=@Limit value=@InputValue @oninput="OnChange" placeholder=@Placeholder />
+
+        <p class="lengthIndicator">
+            @InputValue.Length / @Limit
+        </p>
+    }
+    else
+    {
+        <textarea value=@InputValue @oninput="OnChange" placeholder=@Placeholder />
+    }
+</label>
+@code {
+    [Parameter] public string Label { get; set; }
+    [Parameter] public string Placeholder { get; set; } = "";
+
+    [Parameter] public string InputValue { get; set; }
+    [Parameter] public EventCallback<string> InputValueChanged { get; set; }
+
+    [Parameter] public int Limit { get; set; } = -1;
+
+    private async Task OnChange(ChangeEventArgs e)
+    {
+        await InputValueChanged.InvokeAsync(e.Value.ToString());
+    }
+}
