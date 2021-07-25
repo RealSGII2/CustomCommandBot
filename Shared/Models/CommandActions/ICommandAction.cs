@@ -9,14 +9,14 @@ namespace CustomCommandBot.Shared.Models.CommandActions
         /// <summary>
         /// Whether this CommandAction is able to be executed
         /// </summary>
-        public bool IsEnabled { get; init; }
+        public bool IsEnabled { get; set; }
 
         /// <summary>
         /// The group ID of this CommandAction. Used to give an entire set
         /// of CommandActions options. Can also be used to randomise the
         /// outcome.
         /// </summary>
-        public int GroupId { get; init; }
+        public int GroupId { get; set; }
 
         /// <summary>
         /// A function to run when this action is being executed.
