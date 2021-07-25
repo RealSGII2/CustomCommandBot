@@ -8,10 +8,12 @@
 
 @using Newtonsoft.Json
 
-<NavMenu User=@user />
-<CascadingValue Value=@user Name="CurrentUser">
-    @Body
-</CascadingValue>
+<div class="dashboard split" style="height: 100vh; overflow-y: auto;">
+	<NavMenu User=@user AdditionalClasses="small quiet" />
+	<CascadingValue Value=@user Name="CurrentUser">
+		@Body
+	</CascadingValue>
+</div>
 
 @code {
 	private User user { get; set; }

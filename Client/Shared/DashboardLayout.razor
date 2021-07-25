@@ -8,13 +8,39 @@
 
 @using Newtonsoft.Json
 
-<NavMenu User=@user />
-<CascadingValue Value=@user Name="CurrentUser">
-    @Body
-</CascadingValue>
+<div class="dashboard" style="min-height: 100vh">
+	<NavMenu User=@user AdditionalClasses="small" />
+	@if (Guild is not null)
+	{
+		<div class="tabbar">
+			<div class="content">
+				<button class="dropdown medium custom">
+					@if (Guild.Icon is not null)
+					{
+						<img src=@Guild.IconUrl alt="">
+					}
+
+					<span>
+						@Guild.Name
+					</span>
+					<span class="spacer"></span>
+					<i data-feather="chevron-down"></i>
+				</button>
+			</div>
+		</div>
+	}
+
+	<CascadingValue Value=@this Name="Layout">
+		<CascadingValue Value=@user Name="CurrentUser">
+			@Body
+		</CascadingValue>
+    </CascadingValue>
+</div>
 
 @code {
 	private User user { get; set; }
+
+	public UserGuild Guild { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -32,6 +58,11 @@
 				TypeNameHandling = TypeNameHandling.All
 			});
 		}
+	}
+
+	public void Rerender()
+	{
+		StateHasChanged();
 	}
 
 	protected override async Task OnAfterRenderAsync(bool firstRender) {

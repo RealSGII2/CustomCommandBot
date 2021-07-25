@@ -3,7 +3,7 @@
 @inject NavigationManager NavManager
 @inject HttpClient httpClient
 
-<nav class="appbar">
+<nav class=@("appbar " + AdditionalClasses)>
 	<div class="content">
 		<section>
 			<span class="appIcon">
@@ -64,6 +64,9 @@
 
 	[Parameter]
 	public User User { get; set; }
+
+	[Parameter]
+	public string AdditionalClasses { get; set; } = "";
 
 	private void LogIn()
 	{
