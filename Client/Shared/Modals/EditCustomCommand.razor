@@ -1,0 +1,94 @@
+﻿@using CustomCommandBot.Shared.Models
+@using CustomCommandBot.Shared.Models.CommandActions
+@using CustomCommandBot.Shared.Attributes.Command
+@using CustomCommandBot.Shared.Utilities
+@using CustomCommandBot.Client.Shared.Form
+@using CustomCommandBot.Client.Shared.ActionFields
+@using System.Linq.Expressions
+
+<main class="command form">
+    <Input Label="Trigger" Limit="48" Placeholder="!my-awesome-command" @bind-InputValue="editingCommand.Trigger" />
+
+    <EnumSelect Label="Trigger type" TValue=@CommandTriggerType @bind-SelectValue="editingCommand.TriggerType" />
+
+    @for (int i = 0; i < actions.Count; i++) 
+    {
+        int local = i;
+
+        switch(actions[local])
+        {
+            case SendToChannelAction action:
+                <SendToChannelActionField @bind-Action="actions[local]" />
+                break;
+            case ReplyAction action:
+                <ReplyActionField @bind-Action="actions[local]" />
+                break;
+            default:
+                break;
+        }
+    }
+
+    <div class="formPart">
+        <Select Placeholder="Add a new action..." Options=@(new List<string>() { "Death" }) />
+    </div>
+
+    <div class="flexRow">
+        <div class="spacer"></div>
+
+        <button class="outlined">
+            <span>Cancel</span>
+        </button>
+        <button class="cta" @onclick="(() => Console.WriteLine((editingCommand.Actions.ToList()[0] as ReplyAction).Content))">
+            <span>Save</span>
+        </button>
+    </div>
+</main>
+
+@code {
+    [CascadingParameter]
+    private BlazoredModalInstance ModalInstance { get; set; }
+
+    [Parameter]
+    public string CommandId { get; set; } = "hsA";
+
+    private Command editingCommand { get; set; } = new Command()
+    {
+        Actions = new List<ICommandAction>()
+        {
+            new ReplyAction(),
+            new SendToChannelAction()
+        },
+    };
+
+    private List<ICommandAction> actions 
+    {
+        get => (editingCommand?.Actions ?? new List<ICommandAction>());
+    }
+
+    private string _TEST = "";
+
+    protected override void OnInitialized()
+    {
+        if (CommandId is null)
+        {
+            editingCommand = new();
+        }
+        else
+        {
+            // TODO: Get the command once maxy adds the api
+        }
+    }
+
+    private Type _getComponentForActionType(ICommandAction preAction)
+    {
+        switch(preAction)
+        {
+            case SendToChannelAction action:
+                return typeof(SendToChannelActionField);
+            case ReplyAction action:
+                return typeof(ReplyActionField);
+            default:
+                return null;
+        }
+    }
+}

@@ -1,0 +1,29 @@
+﻿@using CustomCommandBot.Client.Shared.ActionFields
+@using CustomCommandBot.Client.Shared.Form
+
+@using CustomCommandBot.Shared.Models.Discord
+@using CustomCommandBot.Shared.Models.CommandActions
+
+@using Discord.WebSocket
+
+<ActionFieldBase Title="Reply in channel">
+    <ChannelSelect Label="Channel" @bind-SelectValue="_action.ChannelID" />
+    <TextArea Label="Message" Limit="2000" @bind-InputValue="_action.Content" />
+    <EmbedEditor Label="Embed" />
+</ActionFieldBase>
+
+@code {
+    [Parameter]
+    public ICommandAction Action { get; set; }
+
+    [Parameter]
+    public EventCallback<ICommandAction> ActionChanged { get; set; }
+
+    [Parameter]
+    public SocketGuild Guild { get; set; }
+
+    private SendToChannelAction _action
+    {
+        get => Action as SendToChannelAction;
+    }
+}

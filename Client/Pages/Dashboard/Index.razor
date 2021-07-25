@@ -1,0 +1,99 @@
+﻿@page "/dashboard"
+@inject NavigationManager NavManager
+
+@layout DashboardSetupLayout
+
+@using CustomCommandBot.Shared.Models.Discord
+@using Microsoft.Toolkit
+
+<div class="content">
+	<div class="row">
+		<div class="col-sm-12 col-md-6" style="padding: 3rem 3rem 3rem 0.5rem">
+			<h3 style="margin-bottom: 1rem; font-weight: 500;" class="display">
+				Please select a server.
+			</h3>
+
+			<h4 style="margin-bottom: 1rem;">
+				Servers you manage
+			</h4>
+
+			@foreach (UserGuild guild in guilds?.GetInvitedGuilds())
+			{
+				<div class="dashboardGuild">
+					@if (guild.Icon is not null)
+					{
+						<img src=@guild.IconUrl
+							alt="">
+					}
+					else
+					{
+						<div class="avatar">
+							@string.Join("", guild.Name.Split(' ').Select(s => s[0])).Truncate(3)
+                        </div>
+					}
+
+					<div class="contents">
+						<span>
+							@guild.Name
+                        </span>
+					</div>
+
+					<div class="spacer"></div>
+
+					<button class="cta" @onclick='() => NavManager.NavigateTo($"/dashboard/{guild.Id}")'>
+						<span>Manage</span>
+					</button>
+				</div>
+			}
+
+			<h4 style="margin: 1rem 0;">
+				Invite to server
+			</h4>
+
+			@foreach (UserGuild guild in guilds?.GetUninvitedGuilds())
+			{
+				<div class="dashboardGuild">
+					@if (guild.Icon is not null)
+					{
+						<img src=@guild.IconUrl
+							alt="">
+					}
+					else
+					{
+						<div class="avatar">
+							@string.Join("", guild.Name.Split(' ').Select(s => s[0])).Truncate(3)
+                        </div>
+					}
+
+					<div class="contents">
+						<span>
+							@guild.Name
+                        </span>
+					</div>
+
+					<div class="spacer"></div>
+
+					<button class="outlined">
+						<span>Invite</span>
+					</button>
+				</div>
+			}
+		</div>
+
+		<div class="col-sm-12 col-md-6" style="padding: 3rem 0.5rem 3rem 3rem">
+
+		</div>
+	</div>
+</div>
+
+@code {
+	[CascadingParameter(Name = "CurrentUser")]
+	protected User user { get; set; } = new User()
+	{
+		Guilds = new() { }
+	};
+
+	private List<UserGuild> guilds {
+		get => user is null ? new() : user.Guilds;
+	}
+}
