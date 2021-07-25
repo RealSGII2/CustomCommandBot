@@ -26,7 +26,7 @@
     }
 }
 
-@mixin stateModifier($base: #000000, $change: 0.125) {
+@mixin stateModifier($base: #000000, $change: var(--change-percentage)) {
     @include stateModifierBase($base);
 
     &:hover::after {
@@ -34,7 +34,15 @@
     }
 
     &:not([data-ripple]):active::after {
-        opacity: $change * 2 !important;
+        opacity: calc(#{$change} * 2) !important;
+    }
+}
+
+@mixin stateModifierWithFocus($base: #000000, $change: var(--change-percentage)) {
+    @include stateModifierBase($base);
+
+    &:hover::after {
+        opacity: $change;
     }
 }
 

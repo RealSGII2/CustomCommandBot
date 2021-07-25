@@ -58,6 +58,9 @@ body {
         --background-secondary: rgb(40, 45, 55);
         --background-tertiary: rgb(50, 55, 65);
 
+        --background-primary-95: rgba(30, 35, 45, 0.95);
+        --background-primary-98: rgba(30, 35, 45, 0.98);
+
         // Text
         --text-normal: rgb(240, 245, 255);
         --text-light: rgb(200, 205, 215);
@@ -66,6 +69,19 @@ body {
         --text-code: rgb(255, 145, 145);
 
         --theme-border: rgba(240, 245, 255, 0.075);
+
+        // Theme mapping
+        --theme-card-background: var(--background-secondary);
+        --theme-dashboard-background: var(--background-primary);
+
+        --theme-input-normal: var(--background-primary);
+        --theme-input-active: var(--background-primary-alt);
+
+        --theme-header: var(--background-secondary);
+
+        --theme-base: #ffffff;
+
+        --change-percentage: 0.025;
     }
 
     // Light theme
@@ -85,8 +101,11 @@ body {
         // Backgrounds
         --background-primary-alt: var(--background-tertiary);
         --background-primary: rgb(255, 255, 255);
-        --background-secondary: rgb(240, 245, 255);
-        --background-tertiary: rgb(230, 235, 245);
+        --background-secondary: rgb(240, 243, 246);
+        --background-tertiary: rgb(225, 228, 231);
+
+        --background-primary-95: rgba(255, 255, 255, 0.95);
+        --background-primary-98: rgba(255, 255, 255, 0.98);
 
         // Text
         --text-normal: rgb(10, 15, 25);
@@ -95,6 +114,19 @@ body {
         --text-button: rgba(10, 15, 25, 0.65);
         --text-code: rgb(255, 45, 65);
 
-        --theme-border: rgba(10, 15, 25, 0.075);
+        --theme-border: rgba(10, 15, 25, 0.15);
+
+        // Theme mapping
+        --theme-card-background: var(--background-primary);
+        --theme-dashboard-background: var(--background-secondary);
+
+        --theme-input-normal: var(--background-secondary);
+        --theme-input-active: var(--background-primary);
+
+        --theme-header: var(--background-primary);
+
+        --theme-base: #000000;
+
+        --change-percentage: 0.05;
     }
 }

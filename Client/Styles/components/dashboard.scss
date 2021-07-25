@@ -1,0 +1,167 @@
+.dashboard {
+    &:not(.split) {
+        background-color: $dashboard-bg;
+
+        .appbar {
+            background-color: $header-bg !important;
+        }
+    }
+
+    &.split {
+        
+    }
+    
+    &.split, &.fancyBackground {
+        position: relative;
+
+        &::before,
+        &::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 50%;
+            right: 0;
+            bottom: 0;
+        }
+
+        &::after {
+            z-index: -2;
+
+            background-image: url("https://cdn.realsgii2.dev/ccb/wireframe.png");
+        }
+        
+        &::before {
+            z-index: -1;
+            background-image: linear-gradient(
+                    135deg,
+                    $bg-primary 0%,
+                    $bg-primary 10%,
+                    $bg-primary-98 50%,
+                    $bg-primary-95 100%
+                ),
+                linear-gradient(
+                    90deg,
+                    $bg-primary 0%,
+                    $bg-primary 5%,
+                    transparent 25%
+                ),
+                linear-gradient(
+                    -180deg,
+                    $bg-primary 0%,
+                    $bg-primary 5%,
+                    transparent 50%
+                );
+        }
+    }
+
+    nav {
+        display: block;
+    }
+
+    .tabbar {
+        height: 48px;
+        background-color: $header-bg;
+        box-shadow: $shadow-small;
+
+        .content {
+            display: flex;
+            align-items: center;
+            height: 100%;
+
+            .dropdown {
+                @include stateModifier($theme-base);
+
+                img {
+                    max-width: 28px;
+                    border-radius: 999px;
+                    margin-left: -0.125px;
+                }
+
+                svg {
+                    width: 18px;
+                }
+
+                background-color: transparent;
+                color: $text-normal;
+                height: 100%;
+
+                margin-left: -1rem;
+            }
+        }
+    }
+
+    .appbar {
+        position: relative;
+        z-index: 3;
+    }
+}
+
+.dashboardGuild {
+    border-radius: 6px;
+    padding: 1rem;
+
+    margin: 0 -1rem;
+
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    &:hover {
+        background-color: $bg-primary-alt;
+    }
+
+    .meta {
+        opacity: 0.44;
+        font-size: 12px;
+    }
+
+    .contents {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    img,
+    .avatar {
+        overflow: hidden;
+        height: 38px;
+        width: 38px;
+        border-radius: 999px;
+    }
+
+    .avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $bg-secondary;
+        font-size: 0.75rem;
+    }
+
+    .placeholder {
+        border-radius: 999px;
+
+        &.text {
+            width: 14em;
+            height: 0.875rem;
+            font-size: 0.875rem;
+            margin-bottom: 2px;
+            margin-top: 4px;
+        }
+
+        &.small {
+            margin-top: 2px;
+            height: 0.575rem;
+            font-size: 0.35rem;
+        }
+
+        &.button {
+            height: 38px;
+            width: 82px;
+            border-radius: 4px;
+        }
+    }
+}
+
+.theme-light .dashboard::after {
+    filter: brightness(0);
+}

@@ -28,7 +28,7 @@ button:not(.removeDefault), .asButton {
         line-height: 0.9rem;
         border-radius: 4px;
 
-        &.iconOnly {
+        &.iconOnly, &.blazored-modal-close {
             padding: 0;
             width: 36px;
         }
@@ -49,18 +49,26 @@ button:not(.removeDefault), .asButton {
     }
 
     // Alternate style of outlined, outlined is preferable
-    &.ghost {
-        @include stateModifier(#fff, 0.025);
+    &.ghost, &.blazored-modal-close {
+        @include stateModifier($theme-base);
         background-color: $bg-secondary;
         color: $text-button;
     }
 
     // Tertiary style to show something is an action but isn't the main focus of the page
     &.outlined {
-        @include stateModifier(#fff, 0.025);
+        @include stateModifier($theme-base);
         background-color: transparent;
         border: solid 1px $border;
         color: $text-button;
+    }
+
+    // Destructive style, is a tertiary style
+    // Indicates the deletion of things or serious actions, non-important to the current focus
+    &.destructive {
+        @include stateModifier(#ffffff);
+        background-color: $error-10;
+        color: $error-light;
     }
 
     // Large button

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
+using Blazored.Modal;
 
 namespace CustomCommandBot.Client
 {
@@ -36,6 +37,7 @@ namespace CustomCommandBot.Client
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient(handler) { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddBlazoredModal();
 
             await builder.Build().RunAsync();
         }

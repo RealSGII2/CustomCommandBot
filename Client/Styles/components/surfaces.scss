@@ -1,5 +1,5 @@
-// Display
-// Contains hero components & mocks for the homepage or other "display" pages
+// Surfaces
+// Cards, modals, tables
 
 .card {
     border-radius: 6px;
@@ -10,7 +10,7 @@
     }
 
     &.elevated {
-        background-color: $bg-secondary;
+        background-color: $card-bg;
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16),
             0 3px 10px rgba(0, 0, 0, 0.08);
     }
@@ -66,7 +66,7 @@
 .pricingCard {
     width: 100%;
 
-    background-color: $bg-primary;
+    background-color: $card-bg;
     border: solid 1px $border;
     border-radius: 6px;
 
@@ -158,5 +158,61 @@
             margin-top: 1rem;
             margin-bottom: 0.5rem;
         }
+    }
+}
+
+.blazored-modal-container {
+    padding: 3rem;
+}
+
+.modal {
+    background-color: $header-bg;
+    box-shadow: $shadow-small;
+    color: $text-normal;
+
+    z-index: 999;
+
+    overflow: hidden;
+    color-scheme: dark;
+
+    border-radius: 6px;
+
+    .blazored-modal-header {
+        padding: 0 1rem;
+        height: 64px;
+        border-bottom: solid 1px $border;
+
+        display: flex;
+        align-items: center;
+
+        h3 {
+            font-size: 1.125rem;
+            font-weight: 500;
+            margin-left: 0.25rem;
+        }
+    }
+
+    .blazored-modal-content {
+        padding: 1rem;
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: calc(100vh - 6rem - 64px);
+
+        main.form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            &.command {
+                width: 624px;
+            }
+        }
+    }
+
+    .formPart {
+        padding-bottom: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
     }
 }

@@ -28,6 +28,9 @@ $bg-primary: var(--background-primary);
 $bg-secondary: var(--background-secondary);
 $bg-tertiary: var(--background-tertiary);
 
+$bg-primary-95: var(--background-primary-95);
+$bg-primary-98: var(--background-primary-95);
+
 // Colours
 $text-normal: var(--text-normal);
 $text-light: var(--text-light);
@@ -45,3 +48,13 @@ $font-mono: var(--font-mono);
 
 // Other
 $border: var(--theme-border);
+$theme-base: var(--theme-base);
+
+// Mapping
+$card-bg: var(--theme-card-background);
+$dashboard-bg: var(--theme-dashboard-background);
+
+$input-normal: var(--theme-input-normal);
+$input-active: var(--theme-input-active);
+
+$header-bg: var(--theme-header);

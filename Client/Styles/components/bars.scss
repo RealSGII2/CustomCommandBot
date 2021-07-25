@@ -62,7 +62,7 @@ nav.appbar {
         }
 
         &:hover {
-            color: #fff;
+            color: $text-normal;
         }
 
         &:last-of-type {
@@ -70,7 +70,7 @@ nav.appbar {
         }
 
         &.active {
-            color: #fff;
+            color: $text-normal;
 
             &::after {
                 content: "";
