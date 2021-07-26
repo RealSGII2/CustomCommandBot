@@ -17,10 +17,10 @@
         switch(actions[local])
         {
             case SendToChannelAction action:
-                <SendToChannelActionField @bind-Action="actions[local]" />
+                <SendToChannelActionField @bind-Action="action" />
                 break;
             case ReplyAction action:
-                <ReplyActionField @bind-Action="actions[local]" />
+                <ReplyActionField @bind-Action="action" />
                 break;
             default:
                 break;
