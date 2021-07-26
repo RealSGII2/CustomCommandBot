@@ -1,92 +1,93 @@
-button {
-	outline: 0;
+// Button component.
+// I think the name is obvious enough as to what it is.
 
-	font-size: 0.875rem;
-	line-height: 145%;
+button:not(.removeDefault), .asButton {
+    cursor: pointer;
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 
-	border-radius: 999px;
+    text-decoration: none !important;
 
-	font-weight: 700;
+    svg {
+        width: 20px;
+    }
 
-	padding: 0 1rem;
-	height: 32px;
-	border: none;
+    font-weight: 500;
+    margin: 0;
+    transition: 175ms ease-out;
 
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
+    // Default size
+    & {
+        height: 36px;
+        padding: 0 1rem;
+        font-size: 0.9rem;
+        line-height: 0.9rem;
+        border-radius: 4px;
 
-	transition: 130ms ease-out;
+        &.iconOnly, &.blazored-modal-close {
+            padding: 0;
+            width: 36px;
+        }
+    }
 
-	cursor: pointer;
+    // For custom button implementations
+    &.custom {
+        background-color: transparent;
+        color: #fff;
+        border-radius: 0;
+    }
 
-	span {
-		vertical-align: baseline;
-	}
+    // To show "hey, click on me!"
+    &.cta {
+        @include stateModifier(#000, 0.125);
+        background-color: $cta;
+        color: #fff;
+    }
 
-	.material-icons {
-		position: relative;
-		left: -6px;
-	}
+    // Alternate style of outlined, outlined is preferable
+    &.ghost, &.blazored-modal-close {
+        @include stateModifier($theme-base);
+        background-color: $bg-secondary;
+        color: $text-button;
+    }
 
-	& {
-		color: $cta;
-		background-color: colp($cta, $color-change);
+    // Tertiary style to show something is an action but isn't the main focus of the page
+    &.outlined {
+        @include stateModifier($theme-base);
+        background-color: transparent;
+        border: solid 1px $border;
+        color: $text-button;
+    }
 
-		&:hover {
-			background-color: colp($cta, $color-change * 1.5);
-		}
+    // Destructive style, is a tertiary style
+    // Indicates the deletion of things or serious actions, non-important to the current focus
+    &.destructive {
+        @include stateModifier(#ffffff);
+        background-color: $error-10;
+        color: $error-light;
+    }
 
-		&:active {
-			background-color: colp($cta, $color-change * 2);
-		}
-	}
+    // Large button
+    &.large {
+        height: 42px;
+        padding: 0 1.25rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1rem;
+        border-radius: 6px;
+    }
 
-	&.cta {
-		color: $background-primary;
-		background-color: $cta;
-
-		&:hover {
-			background-color: darken($cta, $color-change);
-		}
-
-		&:active {
-			background-color: darken($cta, $color-change * 2);
-		}
-	}
-
-	&.action {
-		.material-icons {
-			font-size: 20px;
-		}
-	}
-
-	&.overBackground {
-		color: $background-primary;
-		background-color: #aaaaaa;
-
-		&:hover {
-			background-color: lighten(#aaaaaa, $color-change);
-		}
-
-		&:active {
-			background-color: lighten(#aaaaaa, $color-change * 2);
-		}
-	}
-
-	&.large {
-		font-size: 16px;
-		height: 38px;
-		padding: 0 1.25rem;
-
-		// font-family: "Red Hat Display", sans-serif;
-
-		span {
-			transform: translateY(-1px);
-		}
-	}
-
-	&:not(.large) {
-		line-height: 16px;
-	}
+    // Extra-large button, typically to display on hero areas such as the front page.
+    &.hero {
+        font-size: 1.075rem;
+        font-weight: 400;
+        border-radius: 6px;
+        height: 56px;
+        line-height: 56px;
+        padding: 0 2.5rem;
+    }
 }

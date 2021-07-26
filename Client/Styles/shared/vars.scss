@@ -1,0 +1,60 @@
+// Most of these are aliases.
+// Go to `../theme.scss` to change their values.
+
+// CTA
+$cta: var(--theme-cta);
+$cta-10: var(--theme-cta-10);
+$cta-20: var(--theme-cta-20);
+$cta-light: var(--theme-cta-light);
+$cta-dark: var(--theme-cta-dark);
+
+// Error
+$error: var(--theme-error);
+$error-10: var(--theme-error-10);
+$error-20: var(--theme-error-20);
+$error-light: var(--theme-error-light);
+$error-dark: var(--theme-error-dark);
+
+// Success
+$success: var(--theme-success);
+$success-10: var(--theme-success-10);
+$success-20: var(--theme-success-20);
+$success-light: var(--theme-success-light);
+$success-dark: var(--theme-success-dark);
+
+// Backgrounds
+$bg-primary-alt: var(--background-primary-alt);
+$bg-primary: var(--background-primary);
+$bg-secondary: var(--background-secondary);
+$bg-tertiary: var(--background-tertiary);
+
+$bg-primary-95: var(--background-primary-95);
+$bg-primary-98: var(--background-primary-95);
+
+// Colours
+$text-normal: var(--text-normal);
+$text-light: var(--text-light);
+$text-muted: var(--text-muted);
+$text-button: var(--text-button);
+
+$text-code: var(--text-code);
+
+// Drop shadows
+$shadow-small: var(--drop-shadow-small);
+
+// Fonts
+$font-sans: var(--font-sans);
+$font-mono: var(--font-mono);
+
+// Other
+$border: var(--theme-border);
+$theme-base: var(--theme-base);
+
+// Mapping
+$card-bg: var(--theme-card-background);
+$dashboard-bg: var(--theme-dashboard-background);
+
+$input-normal: var(--theme-input-normal);
+$input-active: var(--theme-input-active);
+
+$header-bg: var(--theme-header);

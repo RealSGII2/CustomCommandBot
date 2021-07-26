@@ -1,0 +1,63 @@
+﻿@typeparam TValue
+
+@inject IJSRuntime JavaScript
+
+@using CustomCommandBot.Shared.Utilities
+
+<label class="input">
+    <span>
+        @Label
+    </span>
+
+    <button class="input" @onclick="() => _isOpen = true">
+        @if (SelectValue is not null)
+        {
+            <span>
+                @((SelectValue as Enum).GetDescription())
+            </span>
+        }
+        else
+        {
+            <span class="muted">
+                Select...
+            </span>
+        }
+
+        <div class="spacer"></div>
+
+        <i data-feather="chevron-down"></i>
+    </button>
+
+    <div class=@($"dropdown {(_isOpen ? "open" : "closed")}")>
+        @foreach (var item in Enum.GetValues(typeof(TValue)))
+            {
+                <button class=@((int)item == _selectIndex ? "active" : "") @onclick="() => SelectItem(item)">
+                    @(((Enum)item).GetDescription())
+                </button>
+            }
+    </div>
+</label>
+<div class=@($"inputScrim {(_isOpen ? "open" : "closed")}") @onclick="() => _isOpen = false"></div>
+
+@code {
+    [Parameter] public string Label { get; set; }
+
+    
+    [Parameter] public TValue SelectValue { get; set; }
+    [Parameter] public EventCallback<TValue> SelectValueChanged { get; set; }
+
+    private int _selectIndex = 0;
+    private bool _isOpen = false;
+
+    private async Task SelectItem(object index)
+    {
+        _selectIndex = (int)index;
+        await SelectValueChanged.InvokeAsync((TValue)index);
+
+        _isOpen = false;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        await JavaScript.InvokeVoidAsync("renderIcons");
+    }
+}

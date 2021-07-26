@@ -1,0 +1,208 @@
+// Bars
+// Appbar, Announcement banner, Footer
+
+nav.appbar {
+    height: 92px;
+    background-color: $bg-primary-alt;
+
+    .content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .appIcon {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+
+        img {
+            max-height: 36px;
+        }
+
+        span {
+            color: $cta-light;
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+    }
+
+    .menuButton {
+        display: none;
+    }
+
+    section {
+        flex: 1 0 auto;
+        display: inline-flex;
+
+        &.menuItems {
+            justify-content: flex-end;
+            align-items: center;
+        }
+    }
+
+    a {
+        position: relative;
+
+        padding: 0.625rem;
+        color: $text-light;
+        text-decoration: none;
+
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        height: fit-content;
+
+        transition: 130ms ease-out;
+
+        img {
+            max-height: 36px;
+            border-radius: 999px;
+        }
+
+        &:hover {
+            color: $text-normal;
+        }
+
+        &:last-of-type {
+            margin-right: 0.625rem;
+        }
+
+        &.active {
+            color: $text-normal;
+
+            &::after {
+                content: "";
+
+                position: absolute;
+                left: 0.625rem;
+                right: 0.625rem;
+                bottom: -0.25rem;
+
+                border-bottom: solid 4px $cta;
+            }
+        }
+    }
+
+    &.small {
+        height: 64px;
+        background-color: $bg-primary;
+        border-bottom: solid 1px $border;
+
+        button {
+            margin-top: 2px;
+        }
+    }
+
+    &.quiet {
+        background-color: transparent;
+        border: none;
+    }
+}
+
+.announcementBanner {
+    height: 56px;
+    background-color: $cta;
+    color: #fff;
+
+    .content {
+        display: flex;
+        align-items: center;
+        height: 100%;
+
+        gap: 1rem;
+    }
+
+    .icon {
+        $size: 2.625rem;
+        width: $size;
+        height: $size;
+        border-radius: 6px;
+        background-color: $cta-dark;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            width: 1.25rem;
+        }
+    }
+
+    a {
+        color: #fff;
+        text-decoration: none;
+        padding-bottom: 4px;
+
+        border-bottom: solid 2px rgba(255, 255, 255, 0.25);
+        color: rgba(255, 255, 255, 1);
+        height: fit-content;
+        margin-top: 5px;
+
+        &:hover {
+            color: #fff !important;
+            border-color: #fff;
+        }
+
+        svg {
+            vertical-align: middle;
+            width: 16px;
+        }
+    }
+
+    + .heroBanner {
+        top: calc(-17vh + 56px);
+    }
+}
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    .first {
+        .content {
+            align-items: center;
+            height: 100%;
+            border-bottom: solid 2px $border;
+            padding-bottom: 2rem;
+        }
+    }
+
+    .second {
+        .heroText {
+            margin-bottom: 2rem;
+        }
+
+        .displayText {
+            margin-bottom: 12px;
+        }
+
+        .footerRow {
+            display: flex;
+            gap: 6rem;
+        }
+
+        .footerCol {
+            display: flex;
+            flex-direction: column;
+
+            a {
+                padding: 0.625rem 0;
+                color: rgb(200, 205, 215);
+                text-decoration: none;
+
+                transition: 130ms ease-out;
+
+                &:hover {
+                    color: #fff;
+                }
+
+                &:last-of-type {
+                    margin-right: 0.625rem;
+                }
+            }
+        }
+    }
+}

@@ -3,31 +3,60 @@
 @inject NavigationManager NavManager
 @inject HttpClient httpClient
 
-<nav class="appbar">
-	<img src="https://cdn.realsgii2.dev/ccb/icon_small.png" class="appIcon" />
+<nav class=@("appbar " + AdditionalClasses)>
+	<div class="content">
+		<section>
+			<span class="appIcon">
+				<img src="https://cdn.realsgii2.dev/primo/branded-small-logo.png" alt="Primo">
+				<span>
+					Primo
+				</span>
+			</span>
 
-	<div class="spacer"></div>
+			<button class="menuButton ghost" data-open-menu>
+				<i data-feather="menu"></i>
+			</button>
+		</section>
 
-	<a href="/">Home</a>
+		<section class="menuItems">
+			<a href="/" class="active">Home</a>
 
-	<a href="/docs">Documentation</a>
+			@* <a href="/pricing">Pricing</a> *@
 
-	<a href="/link/support">Support</a>
+			@* <a href="/docs">Documentation</a> *@
 
-	@if (User is null)
-	{
-		<a class="cta large asButton" href="/auth/login">
-			<span>Log in</span>
-		</a>
-	}
-	else
-	{
-		<a href="/dashboard">My Servers</a>
+			<a href="/support">Support</a>
 
-		<a href="/dashboard/profile" class="appbarProfile">
-			<img src=@User.AvatarUrl />
-		</a>
-	}
+			@if (User is not null)
+			{
+				<a href="/dashboard">My servers</a>
+			}
+
+			<div class="optSpacer"></div>
+
+			@if (User is null)
+			{
+				<a href="/auth/login" style="padding: 0;">
+					<button class="cta">
+						<span>Log in</span>
+					</button>
+				</a>
+			}
+			else
+			{
+				<a class="profileLink">
+					<img src=@User.AvatarUrl alt=@User.Username>
+					@User.Username
+				</a>
+			}
+
+			<button class="menuButton ghost" data-close-menu>
+				<i data-feather="x"></i>
+			</button>
+		</section>
+
+		<div class="scrim"></div>
+	</div>
 </nav>
 
 @code {
@@ -36,7 +65,11 @@
 	[Parameter]
 	public User User { get; set; }
 
-	private void LogIn() {
+	[Parameter]
+	public string AdditionalClasses { get; set; } = "";
+
+	private void LogIn()
+	{
 		if (User is null)
 			NavManager.NavigateTo(loginUri);
 	}

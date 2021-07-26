@@ -1,0 +1,132 @@
+// Serves as a configuration for the colours and common elements around the website.
+// Theming is not applied here, for global styles it's applied in index.scss,
+// otherwise, in components that need these variables.
+
+// Do not use these variables or custom properties directly.
+// Use the variables in `shared/vars` instead.
+
+$theme-cta: rgb(25, 125, 255);
+$theme-error: rgb(255, 50, 25);
+$theme-success: rgb(25, 185, 85);
+
+// Static values for themes
+// Anything here SHOULD **NOT** change no matter what
+:root {
+    // Static cta
+    --theme-cta: #{$theme-cta};
+    --theme-cta-10: #{change-color($theme-cta, $alpha: 0.1)};
+    --theme-cta-20: #{change-color($theme-cta, $alpha: 0.2)};
+
+    // Static error
+    --theme-error: #{$theme-error};
+    --theme-error-10: #{change-color($theme-error, $alpha: 0.1)};
+    --theme-error-20: #{change-color($theme-error, $alpha: 0.2)};
+
+    // Static success
+    --theme-success: #{$theme-success};
+    --theme-success-10: #{change-color($theme-success, $alpha: 0.1)};
+    --theme-success-20: #{change-color($theme-success, $alpha: 0.2)};
+
+    // Static dropshadows
+    --drop-shadow-small: 0 4px 16px rgba(0, 0, 0, 0.16), 0 3px 10px rgba(0, 0, 0, 0.08);
+
+    // Static fonts
+    --font-sans: 'Inter', sans-serif;
+    --font-mono: 'Fira Mono', monospace;
+}
+
+// Dynamic values for themes
+// Anything here SHOULD change depending on the theme
+body {
+    // Dark theme
+    &:not(.theme-light) {
+        // CTA Variants
+        --theme-cta-light: #{lighten($theme-cta, 10%)};
+        --theme-cta-dark: #{dark($theme-cta, 10%)};
+
+        // Error variants
+        --theme-error-light: #{lighten($theme-error, 10%)};
+        --theme-error-dark: #{dark($theme-error, 10%)};
+
+        // Success variants
+        --theme-success-light: #{lighten($theme-success, 10%)};
+        --theme-success-dark: #{dark($theme-success, 10%)};
+
+        // Backgrounds
+        --background-primary-alt: rgb(20, 25, 35);
+        --background-primary: rgb(30, 35, 45);
+        --background-secondary: rgb(40, 45, 55);
+        --background-tertiary: rgb(50, 55, 65);
+
+        --background-primary-95: rgba(30, 35, 45, 0.95);
+        --background-primary-98: rgba(30, 35, 45, 0.98);
+
+        // Text
+        --text-normal: rgb(240, 245, 255);
+        --text-light: rgb(200, 205, 215);
+        --text-muted: rgb(150, 155, 165);
+        --text-button: rgba(240, 245, 255, 0.65);
+        --text-code: rgb(255, 145, 145);
+
+        --theme-border: rgba(240, 245, 255, 0.075);
+
+        // Theme mapping
+        --theme-card-background: var(--background-secondary);
+        --theme-dashboard-background: var(--background-primary);
+
+        --theme-input-normal: var(--background-primary);
+        --theme-input-active: var(--background-primary-alt);
+
+        --theme-header: var(--background-secondary);
+
+        --theme-base: #ffffff;
+
+        --change-percentage: 0.025;
+    }
+
+    // Light theme
+    &.theme-light {
+        // CTA Variants
+        --theme-cta-light: #{darken($theme-cta, 10%)};
+        --theme-cta-dark: #{lighten($theme-cta, 10%)};
+
+        // Error variants
+        --theme-error-light: #{darken($theme-error, 10%)};
+        --theme-error-dark: #{lighten($theme-error, 10%)};
+
+        // Success variants
+        --theme-success-light: #{darken($theme-success, 10%)};
+        --theme-success-dark: #{lighten($theme-success, 10%)};
+
+        // Backgrounds
+        --background-primary-alt: var(--background-tertiary);
+        --background-primary: rgb(255, 255, 255);
+        --background-secondary: rgb(240, 243, 246);
+        --background-tertiary: rgb(225, 228, 231);
+
+        --background-primary-95: rgba(255, 255, 255, 0.95);
+        --background-primary-98: rgba(255, 255, 255, 0.98);
+
+        // Text
+        --text-normal: rgb(10, 15, 25);
+        --text-light: rgb(50, 55, 65);
+        --text-muted: rgba(10, 15, 25, 0.45);
+        --text-button: rgba(10, 15, 25, 0.65);
+        --text-code: rgb(255, 45, 65);
+
+        --theme-border: rgba(10, 15, 25, 0.15);
+
+        // Theme mapping
+        --theme-card-background: var(--background-primary);
+        --theme-dashboard-background: var(--background-secondary);
+
+        --theme-input-normal: var(--background-secondary);
+        --theme-input-active: var(--background-primary);
+
+        --theme-header: var(--background-primary);
+
+        --theme-base: #000000;
+
+        --change-percentage: 0.05;
+    }
+}

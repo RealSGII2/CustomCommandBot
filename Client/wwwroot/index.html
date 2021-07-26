@@ -9,15 +9,8 @@
 
     <base href="/" />
 
-    <!-- Commented until removed to get appropriate styles
-
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/app.css" rel="stylesheet" />
-    <link href="CustomCommandBot.Client.styles.css" rel="stylesheet" />
-
-    -->
-
     <link href="css/BlazorSass.min.css" rel="stylesheet" />
+    <link href="_content/Blazored.Modal/blazored-modal.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -29,6 +22,13 @@
         <a class="dismiss">🗙</a>
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
+
+    <script src="_content/Blazored.Modal/blazored.modal.js"></script>
+
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        window.renderIcons = feather.replace
+    </script>
 </body>
 
 </html>

@@ -1,0 +1,145 @@
+﻿@page "/dashboard/{GuildId}"
+@inject NavigationManager NavManager
+
+@layout DashboardLayout
+
+@using CustomCommandBot.Shared.Models.Discord
+@using CustomCommandBot.Client.Shared.Modals
+@using Microsoft.Toolkit
+
+<div class="content" style="margin-top: 3rem;">
+	<div class="row">
+		<div class="col-sm-12 col-md-8">
+			<div class="card elevated" style="width: 100%; overflow: hidden;">
+                    <table class="dataTable">
+                        <thead class="large">
+                            <tr>
+                                <th>
+                                    Command name
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                <th>
+                                    <div class="flexRow">
+                                        <div class="spacer"></div>
+
+                                        <button class="cta">
+                                            <i data-feather="plus"></i>
+                                            <span>
+                                                Create command
+                                            </span>
+                                        </button>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>!test</td>
+                                <td>My awesome command!</td>
+                                <td>
+                                    <div class="flexRow">
+                                        <div class="spacer"></div>
+                                        <button class="outlined iconOnly" @onclick='() => Modal.Show<EditCustomCommand>("Edit Command")'>
+                                            <i data-feather="edit"></i>
+                                        </button>
+
+                                        <button class="outlined iconOnly">
+                                            <i data-feather="trash-2"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+		</div>
+
+		<div class="col-sm-12 col-md-4">
+			<div class="flexList" style="gap: 2rem;">
+                    <div class="card elevated" style="width: 100%;">
+                        <header>
+                            Current Plan
+                        </header>
+                        <main style="font-size: 0.875rem;">
+                            <p style="margin: 0;">
+                                This server uses the free plan, allowing you to use essential features. If you'd like to see your feature set, or upgrade, you may visit the Pricing page.
+                            </p>
+                            
+                            <div class="flexRow" style="margin-top: 1rem;">   
+                                <div class="spacer"></div>
+                                <button class="outlined">
+                                    <span>Pricing</span>
+                                    <span>
+                                        <i data-feather="external-link"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </main>
+                    </div>
+                    
+                    <div class="card elevated" style="width: 100%;">
+                        <header>
+                            Limitations
+                        </header>
+                        <main style="font-size: 0.875rem;">
+                            <p style="margin: 0; margin-bottom: 1rem;">
+                                To prevent abuse, limits are set on the number of files you may upload, the number of commands you may create, and other features.
+                            </p>
+                            
+                            <div class="meter" style="margin-bottom: 1rem;">
+                                <label>Commands <span class="muted">(1 / 75)</span></label>
+                                <div style="--value: calc(1 / 75)"></div>
+                            </div>
+                            
+                            <div class="meter" style="margin-bottom: 1rem;">
+                                <label>Datastore <span class="muted">(0 kB / 750 kB)</span></label>
+                                <div style="--value: calc(0)"></div>
+                            </div>
+                            
+                            <div class="meter disabled" style="margin-bottom: 0;">
+                                <label>Files <span class="muted">(Disabled)</span></label>
+                                <div style="--value: 0"></div>
+                            </div>
+                        </main>
+                    </div>
+                </div>
+		</div>
+	</div>
+</div>
+
+@code {
+    [CascadingParameter]
+    public IModalService Modal { get; set; }
+
+	[CascadingParameter(Name = "CurrentUser")]
+	protected User user { get; set; } = new User()
+	{
+		Guilds = new() { }
+	};
+
+	[CascadingParameter(Name = "Layout")]
+	protected DashboardLayout layout { get; set; }
+
+	[Parameter]
+	public string GuildId { get; set; }
+
+	private List<UserGuild> guilds {
+		get => user is null ? new() : user.Guilds;
+	}
+
+	protected override async Task OnParametersSetAsync()
+	{
+		if (guilds.Count > 0 && layout.Guild is null)
+		{
+			var resultGuilds = guilds.Where(g => g.Id == GuildId).ToList();
+
+			if (resultGuilds.Count > 0)
+			{
+				layout.Guild = resultGuilds[0];
+				layout.Rerender();
+			}
+		}
+	}
+}

@@ -1,7 +1,0 @@
-@function col($color, $alpha) {
-	@return change-color($color, $alpha: $alpha);
-}
-
-@function colp($color, $alpha) {
-	@return change-color($color, $alpha: $alpha * 0.01);
-}

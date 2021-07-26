@@ -1,16 +1,58 @@
-.appTitle {
-	font-size: 20px;
-	font-weight: 700;
-	font-family: "Red Hat Display", sans-serif;
+// Typography
+// Styles for text
+
+h1 {
+    font-size: 3rem;
 }
 
-h1,
-h2,
-h3,
-.displayText {
-	font-family: "Red Hat Display", sans-serif;
-	font-weight: 700;
-	letter-spacing: 0.025em;
+h2 {
+    font-size: 2.25rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+h4 {
+    font-size: 1.25rem;
+}
+
+h5 {
+    font-size: 1.15rem;
+}
+
+h6 {
+    font-size: 0.875rem;
+}
+
+code {
+    color: $text-code;
+    font-family: "Fira Mono", monospace;
+}
+
+ul {
+    margin: 0 1rem 0;
+    padding: 0;
+
+    li {
+        margin: 0;
+
+        &:not(:last-child) {
+            margin-bottom: 0.25rem;
+        }
+
+        &::marker {
+            content: "";
+        }
+
+        &::before {
+            content: "–";
+            display: inline-block;
+            margin-right: 1rem;
+            margin-left: -15px;
+            opacity: 0.64;
+        }
+    }
 }
 
 h1,
@@ -20,28 +62,32 @@ h4,
 h5,
 h6,
 p {
-	margin: 0;
-	margin-bottom: 1rem;
+    margin: 0;
+    line-height: 1.3em;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-b,
-i {
-	line-height: 130%;
-}
-
-h2 {
-	font-size: 34px;
+h4, h5, h6 {
+    font-weight: 500;
 }
 
 .heroText {
-	display: block;
-	font-size: 18px;
-	opacity: 0.84;
+    display: block;
+    font-size: 1.125rem;
+    color: $text-light;
+}
+
+.center {
+    text-align: center;
+}
+
+.displayText {
+    font-weight: 700;
+}
+
+.muted {
+    color: $text-muted;
+}
+
+.large {
+    font-size: 1.25em;
 }

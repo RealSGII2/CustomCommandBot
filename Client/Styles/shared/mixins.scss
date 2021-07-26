@@ -1,0 +1,89 @@
+@mixin stateModifierBase($base: #000000) {
+    position: relative;
+    overflow: hidden;
+
+    * {
+        position: relative;
+        z-index: 3;
+    }
+
+    &::after {
+        content: "";
+
+        z-index: 2;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        background-color: $base;
+
+        opacity: 0;
+
+        transition: 135ms ease-out;
+    }
+}
+
+@mixin stateModifier($base: #000000, $change: var(--change-percentage)) {
+    @include stateModifierBase($base);
+
+    &:hover::after {
+        opacity: $change;
+    }
+
+    &:not([data-ripple]):active::after {
+        opacity: calc(#{$change} * 2) !important;
+    }
+}
+
+@mixin stateModifierWithFocus($base: #000000, $change: var(--change-percentage)) {
+    @include stateModifierBase($base);
+
+    &:hover::after {
+        opacity: $change;
+    }
+}
+
+@mixin placeholder() {
+    overflow: hidden;
+    position: relative;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        opacity: 0.1;
+
+        background-color: #fff;
+
+        animation: placeholder ease-in-out 1500ms forwards infinite;
+        animation-delay: calc(var(--nth, 0) * 150ms);
+    }
+}
+
+@keyframes placeholder {
+    $dim: 0.05;
+    $lit: 0.1;
+
+    from {
+        opacity: $lit;
+    }
+
+    35% {
+        opacity: $dim;
+    }
+
+    65% {
+        opacity: $dim;
+    }
+
+    to {
+        opacity: $lit;
+    }
+}
