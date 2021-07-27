@@ -21,6 +21,8 @@ namespace CustomCommandBot.Shared.Models.Api
         public IReadOnlyCollection<ApiRole> Roles { get; private init; }
         public IReadOnlyCollection<ApiChannel> Channels { get; private init; }
 
+        public IReadOnlyCollection<ApiPartialCommand> Commands { get; private init; }
+
         public ApiGuild(SocketGuild socketGuild, UserGuild userGuild)
         {
             Name = socketGuild.Name;
@@ -31,6 +33,14 @@ namespace CustomCommandBot.Shared.Models.Api
 
             Roles = socketGuild.Roles.Select(r => new ApiRole(r)).ToList();
             Channels = socketGuild.Channels.Select(c => new ApiChannel(c)).ToList();
+
+            using (var database = new LiteDatabase(@"Databases/Commands.db"))
+            {
+                var collection = database.GetCollection<Command>("g" + Id);
+                collection.EnsureIndex(d => d.TriggerType);
+
+                Commands = collection.FindAll().Select(c => new ApiPartialCommand(c)).ToList();
+            }
         }
     }
 }
