@@ -17,10 +17,10 @@
         switch(actions[local])
         {
             case SendToChannelAction action:
-                <SendToChannelActionField @bind-Action="action" />
+                <SendToChannelActionField @bind-Action="actions[local]" />
                 break;
             case ReplyAction action:
-                <ReplyActionField @bind-Action="action" />
+                <ReplyActionField @bind-Action="actions[local]" />
                 break;
             default:
                 break;
@@ -28,7 +28,7 @@
     }
 
     <div class="formPart">
-        <Select Placeholder="Add a new action..." Options=@(new List<string>() { "Death" }) />
+        <Select Label="Add action" Placeholder="Add a new action..." Options=@(new List<string>() { "Death" }) />
     </div>
 
     <div class="flexRow">

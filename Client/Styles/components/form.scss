@@ -57,61 +57,6 @@ label.input {
         justify-content: flex-start;
     }
 
-    .dropdown {
-        background-color: $input-active;
-        border-radius: 6px;
-        padding: 0.5rem 0;
-
-        position: absolute;
-        top: 79px;
-
-        width: 100%;
-
-        box-shadow: $shadow-small;
-
-        display: flex;
-        flex-direction: column;
-
-        z-index: 6;
-
-        transition: opacity 130ms ease-out, display 130ms 130ms ease-out;
-
-        button {
-            @include stateModifier($theme-base);
-
-            border-radius: 0;
-            justify-content: flex-start;
-            background-color: transparent;
-            color: $text-light;
-
-            font-size: 1rem;
-            font-weight: 400;
-            height: 44px;
-
-            &:hover, &:active {
-                color: $text-normal;
-            }
-
-            &.active {
-                color: $cta-light;
-                background-color: $cta-10;
-            }
-        }
-
-        & {
-            // Closed state
-            display: none;
-            opacity: 0;
-        }
-
-        &.open {
-            // Open state
-            display: flex;
-            opacity: 1;
-            transition: opacity 130ms ease-out;
-        }
-    }
-
     + .inputScrim {
         position: fixed;
         top: 0;
@@ -119,12 +64,82 @@ label.input {
         right: 0;
         bottom: 0;
         z-index: 5;
-
+    
         display: none;
-
+    
         &.open {
             display: block;
         }
+    }
+}
+
+.dropdown {
+    background-color: $input-active;
+    border-radius: 6px;
+    padding: 0.5rem 0;
+
+    position: absolute;
+    top: 79px;
+
+    width: 100%;
+
+    box-shadow: $shadow-small;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 6;
+
+    transition: opacity 130ms ease-out, display 130ms 130ms ease-out;
+
+    button {
+        @include stateModifier($theme-base);
+
+        border-radius: 0;
+        justify-content: flex-start;
+        background-color: transparent;
+        color: $text-light;
+
+        font-size: 1rem;
+        font-weight: 400;
+        height: 44px;
+
+        &:hover, &:active {
+            color: $text-normal;
+        }
+
+        &.active {
+            color: $cta-light;
+            background-color: $cta-10;
+        }
+    }
+
+    & {
+        // Closed state
+        display: none;
+        opacity: 0;
+    }
+
+    &.open {
+        // Open state
+        display: flex;
+        opacity: 1;
+        transition: opacity 130ms ease-out;
+    }
+}
+
++ .inputScrim {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+
+    display: none;
+
+    &.open {
+        display: block;
     }
 }
 

@@ -7,7 +7,7 @@
         @Label
     </span>
 
-    <button class="input" @onclick="() => _isOpen = true">
+    <button class="input" @onclick="_open">
         @if (SelectValue is not 0)
         {
             <span>
@@ -26,7 +26,7 @@
         <i data-feather="chevron-down"></i>
     </button>
 
-    <div class=@($"dropdown {(_isOpen ? "open" : "closed")}")>
+    <div class="dropdown" id=@guid.ToString()>
         @for (int i = 0; i < Options.Count(); i++)
         {
             <button class=@(i == _selectIndex ? "active" : "") @onclick="() => SelectItem(i)">
@@ -35,7 +35,6 @@
         }
     </div>
 </label>
-<div class=@($"inputScrim {(_isOpen ? "open" : "closed")}") @onclick="() => _isOpen = false"></div>
 
 @code {
     [Parameter] public string Label { get; set; }
@@ -45,6 +44,8 @@
     [Parameter] public EventCallback<ulong> SelectValueChanged { get; set; }
 
     [Parameter] public IEnumerable<ulong> Options { get; set; } = new List<ulong>();
+
+    private Guid guid = Guid.NewGuid();
 
     private int _selectIndex = -1;
     private bool _isOpen = false;
@@ -59,5 +60,9 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender) {
         await JavaScript.InvokeVoidAsync("renderIcons");
+    }
+
+    private async Task _open() {
+        await JavaScript.InvokeVoidAsync("addOpenToDropdown", guid.ToString());
     }
 }

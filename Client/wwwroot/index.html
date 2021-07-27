@@ -28,6 +28,30 @@
     <script src="https://unpkg.com/feather-icons"></script>
     <script>
         window.renderIcons = feather.replace
+        window.addOpenToDropdown = (id) => {
+            const elem = document.getElementById(id)
+            if (elem && elem.classList.contains("dropdown"))
+                elem.classList.add("open")
+        }
+        window.removeOpenFromDropdown = (id) => {
+            const elem = document.getElementById(id)
+            if (elem && elem.classList.contains("dropdown"))
+                elem.classList.remove("open")
+        }
+    </script>
+    <script>
+        document.addEventListener("click", (evt) => {
+            let target = evt.target
+
+            do {
+                if (typeof target.classList !== "undefined" && target.classList.contains("dropdown"))
+                    return
+
+                target = target.parentNode
+            } while (target)
+
+            Array.from(document.querySelectorAll(".dropdown.open")).forEach(d => d.classList.remove("open"))
+        });
     </script>
 </body>
 
