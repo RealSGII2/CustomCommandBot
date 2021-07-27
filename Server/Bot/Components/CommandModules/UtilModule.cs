@@ -18,5 +18,27 @@ namespace CustomCommandBot.Server.Bot.Components
         {
             return CommandResult.FromSuccess(Context.Client.Guilds.Count.ToString());
         }
+
+        [Command("add-test-command")]
+        [Summary("Add a command to test the bot")]
+        [RequireOwner]
+        public async Task<RuntimeResult> AddTestCommand()
+        {
+            Context.Guild.AddCommand(new()
+            {
+                Trigger = "!test",
+                TriggerType = CommandTriggerType.BeginsWith,
+                Description = "Test command for use in testing custom commands",
+                Actions = new()
+                {
+                    new ReplyAction()
+                    {
+                        Content = "Test succeeded."
+                    }
+                }
+            });
+
+            return CommandResult.FromSuccess("`!test` command added.");
+        }
     }
 }
