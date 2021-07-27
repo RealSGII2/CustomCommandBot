@@ -11,18 +11,16 @@ namespace CustomCommandBot.Shared.Models
         public string Trigger { get; set; }
         public CommandTriggerType TriggerType { get; set; }
 
+        public string Description { get; set; }
+
         public List<ICommandAction> Actions { get; set; }
     }
 
     public enum CommandTriggerType
     {
-        [Description("Begins with")]
         BeginsWith,
-        [Description("Ends with")]
         EndsWith,
-        [Description("Contains")]
         Contains,
-        //[Description("Regex")]
         //Regex
     }
 }

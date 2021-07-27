@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CustomCommandBot.Shared.Models.Discord
 {
@@ -26,17 +23,6 @@ namespace CustomCommandBot.Shared.Models.Discord
             get => (Permissions & 0x32) == 0x32;
         }
 
-        public DatabaseGuild ToDatabaseGuild()
-        {
-            return new()
-            {
-                Name = Name,
-                Id = Id,
-                Permissions = Permissions,
-                Icon = Icon,
-                IsClientInGuild = IsClientInGuild
-            };
-        }
 
         public static UserGuild FromJson(string json)
         {
