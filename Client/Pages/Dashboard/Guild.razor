@@ -1,16 +1,23 @@
 ﻿@page "/dashboard/{GuildId}"
 @inject NavigationManager NavManager
+@inject HttpClient httpClient
 
 @layout DashboardLayout
 
+@using CustomCommandBot.Client.Enums
+@using CustomCommandBot.Shared.Models.Api
 @using CustomCommandBot.Shared.Models.Discord
 @using CustomCommandBot.Client.Shared.Modals
 @using Microsoft.Toolkit
 
+@using Newtonsoft.Json
+
 <div class="content" style="margin-top: 3rem;">
-	<div class="row">
-		<div class="col-sm-12 col-md-8">
-			<div class="card elevated" style="width: 100%; overflow: hidden;">
+	@if (_loadState == LoadState.Ok)
+	{
+		<div class="row">
+		    <div class="col-sm-12 col-md-8">
+                <div class="card elevated" style="width: 100%; overflow: hidden;">
                     <table class="dataTable">
                         <thead class="large">
                             <tr>
@@ -54,10 +61,10 @@
                         </tbody>
                     </table>
                 </div>
-		</div>
+		    </div>
 
-		<div class="col-sm-12 col-md-4">
-			<div class="flexList" style="gap: 2rem;">
+		    <div class="col-sm-12 col-md-4">
+			    <div class="flexList" style="gap: 2rem;">
                     <div class="card elevated" style="width: 100%;">
                         <header>
                             Current Plan
@@ -105,19 +112,25 @@
                         </main>
                     </div>
                 </div>
-		</div>
-	</div>
+		    </div>
+	    </div>
+    }
+    else if (_loadState == LoadState.Unfinished)
+    {
+        <span>Loading...</span>
+    }
+    else
+    {
+        <span>Error occured when loading guild</span>
+    }
 </div>
 
 @code {
     [CascadingParameter]
     public IModalService Modal { get; set; }
 
-	[CascadingParameter(Name = "CurrentUser")]
-	protected User user { get; set; } = new User()
-	{
-		Guilds = new() { }
-	};
+    [CascadingParameter(Name = "CurrentUser")]
+    protected User user { get; set; }
 
 	[CascadingParameter(Name = "Layout")]
 	protected DashboardLayout layout { get; set; }
@@ -125,21 +138,31 @@
 	[Parameter]
 	public string GuildId { get; set; }
 
-	private List<UserGuild> guilds {
-		get => user is null ? new() : user.Guilds;
-	}
+    private ApiGuild _guild;
+	private LoadState _loadState = LoadState.Unfinished;
 
-	protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
 	{
-		if (guilds.Count > 0 && layout.Guild is null)
-		{
-			var resultGuilds = guilds.Where(g => g.Id == GuildId).ToList();
-
-			if (resultGuilds.Count > 0)
-			{
-				layout.Guild = resultGuilds[0];
-				layout.Rerender();
-			}
-		}
+		await GetGuildAsync();
 	}
+
+	private async Task GetGuildAsync() {
+		HttpRequestMessage req = new(HttpMethod.Get, $"/api/guild/{GuildId}");
+		var result = await httpClient.SendAsync(req);
+
+        if (result.IsSuccessStatusCode)
+        {
+            _guild = JsonConvert.DeserializeObject<ApiGuild>(await result.Content.ReadAsStringAsync(), new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.All
+            });
+
+            layout.Guild = _guild;
+            layout.Rerender();
+
+            _loadState = LoadState.Ok;
+        }
+        else
+            _loadState = LoadState.Error;
+    }
 }

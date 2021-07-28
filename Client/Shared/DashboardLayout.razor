@@ -1,4 +1,5 @@
-﻿@using CustomCommandBot.Shared.Models.Discord
+﻿@using CustomCommandBot.Shared.Models.Api
+@using CustomCommandBot.Shared.Models.Discord
 
 @inject HttpClient httpClient
 @inject NavigationManager navManager
@@ -15,7 +16,7 @@
 		<div class="tabbar">
 			<div class="content">
 				<button class="dropdown medium custom">
-					@if (Guild.Icon is not null)
+					@if (Guild.IconUrl is not null)
 					{
 						<img src=@Guild.IconUrl alt="">
 					}
@@ -40,7 +41,7 @@
 @code {
 	private User user { get; set; }
 
-	public UserGuild Guild { get; set; }
+	public ApiGuild Guild { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{
