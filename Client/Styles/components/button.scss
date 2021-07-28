@@ -90,4 +90,11 @@ button:not(.removeDefault), .asButton {
         line-height: 56px;
         padding: 0 2.5rem;
     }
+
+    &:disabled {
+        opacity: 0.45;
+        filter: saturate(0.5);
+
+        cursor: not-allowed;
+    }
 }

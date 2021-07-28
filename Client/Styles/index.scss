@@ -1,23 +1,23 @@
 // Imports
-@import 'imports';
+@import 'imports.scss';
 
 // Import shared
-@import 'shared/vars';
-@import 'shared/mixins';
+@import 'shared/vars.scss';
+@import 'shared/mixins.scss';
 
 // Import "atoms" (to build the "molecule")
-@import 'theme';
-@import 'internal/blazor';
+@import 'theme.scss';
+@import 'internal/blazor.scss';
 
 // Import components
-@import 'components/bars';
-@import 'components/button';
-@import 'components/dashboard';
-@import 'components/display';
-@import 'components/form';
-@import 'components/layout';
-@import 'components/surfaces';
-@import 'components/typography';
+@import 'components/bars.scss';
+@import 'components/button.scss';
+@import 'components/dashboard.scss';
+@import 'components/display.scss';
+@import 'components/form.scss';
+@import 'components/layout.scss';
+@import 'components/surfaces.scss';
+@import 'components/typography.scss';
 
 // Global styles
 html,

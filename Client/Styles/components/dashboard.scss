@@ -68,7 +68,7 @@
             align-items: center;
             height: 100%;
 
-            .dropdown {
+            .guildDropdown {
                 @include stateModifier($theme-base);
 
                 img {

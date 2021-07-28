@@ -152,4 +152,48 @@ label.input {
 .formPart {
     padding: 1rem 0;
     border-top: solid 1px $border;
+
+    &.collapse {
+        padding: 1rem 1px;
+        margin: 0 -1px;
+    }
+
+    .chevron svg {
+        transform: rotate(90deg);
+        transition: transform 130ms ease-out;
+    }
+
+    &.collapse:last-child {
+        padding-bottom: 0;
+
+        &.closed {
+            max-height: 53px;
+        }
+    }
+
+    &.collapse.closed {
+        max-height: 68px;
+        overflow-y: hidden;
+        overflow-x: visible;
+
+        .chevron svg {
+            transform: none;
+        }
+    }
+}
+
+.validation-errors {
+    margin: 0;
+    padding: 1rem;
+
+    background-color: var(--theme-error-10);
+    border: solid 1px var(--theme-error-20);
+    color: var(--theme-error-light);
+
+    border-radius: 6px;
+    margin-bottom: 1rem;
+
+    ::before {
+        display: none;
+    }
 }

@@ -1,62 +1,84 @@
 ﻿@using CustomCommandBot.Shared.Models
+@using CustomCommandBot.Shared.Models.Api
 @using CustomCommandBot.Shared.Models.CommandActions
 @using CustomCommandBot.Shared.Utilities
 @using CustomCommandBot.Client.Shared.Form
 @using CustomCommandBot.Client.Shared.ActionFields
 @using System.Linq.Expressions
+@using System.Web
+@using System.Text
+@using Newtonsoft.Json
+
+@inject HttpClient httpClient
 
 <main class="command form">
-    <Input Label="Trigger" Limit="48" Placeholder="!my-awesome-command" @bind-InputValue="editingCommand.Trigger" />
-
-    <EnumSelect Label="Trigger type" TValue=@CommandTriggerType @bind-SelectValue="editingCommand.TriggerType" />
-
-    @for (int i = 0; i < actions.Count; i++) 
+    @if (editContext is not null)
     {
-        int local = i;
+        <EditForm EditContext=@editContext>
+            <ObjectGraphDataAnnotationsValidator />
+            <ValidationSummary />
 
-        switch(actions[local])
-        {
-            case SendToChannelAction action:
-                <SendToChannelActionField @bind-Action="actions[local]" />
-                break;
-            case ReplyAction action:
-                <ReplyActionField @bind-Action="actions[local]" />
-                break;
-            default:
-                break;
-        }
+            <Input Label="Trigger" Limit="48" Placeholder="!my-awesome-command" @bind-Value="editingCommand.Trigger" />
+
+            <EnumSelect Label="Trigger type" TValue=@CommandTriggerType @bind-SelectValue="editingCommand.TriggerType" />
+
+            <div style="padding-top: 1rem;"></div>
+
+            @for (int i = 0; i < actions.Count; i++) 
+            {
+                int local = i;
+
+                switch(actions[local])
+                {
+                    case SendToChannelAction action:
+                        <SendToChannelActionField @bind-Action="actions[local]" Position=@(local + 1) OnDelete=@(() => actions.RemoveAt(local)) Guild=@Guild />
+                        break;
+                    case ReplyAction action:
+                        <ReplyActionField @bind-Action="actions[local]" Position=@(local + 1) OnDelete=@(() => actions.RemoveAt(local)) />
+                        break;
+                    default:
+                        break;
+                }
+            }
+        </EditForm>
+
+        <div class="formPart">
+            <Select Label="Add action" Placeholder="Add a new action..." @bind-SelectValue="_addAction" CustomChanged=@_addActionFromKey Options=@(_allowedActions.Keys.ToList()) />
+        </div>
+
+        <div class="flexRow">
+            <div class="spacer"></div>
+
+            <button class="outlined">
+                <span>Cancel</span>
+            </button>
+            <button disabled=@formInvalid type="submit" class="cta" @onclick=_submitCommand>
+                <span>Save</span>
+            </button>
+        </div>
     }
-
-    <div class="formPart">
-        <Select Label="Add action" Placeholder="Add a new action..." Options=@(new List<string>() { "Death" }) />
-    </div>
-
-    <div class="flexRow">
-        <div class="spacer"></div>
-
-        <button class="outlined">
-            <span>Cancel</span>
-        </button>
-        <button class="cta" @onclick="(() => Console.WriteLine((editingCommand.Actions.ToList()[0] as ReplyAction).Content))">
-            <span>Save</span>
-        </button>
-    </div>
+    else
+    {
+        <span>Loading...</span>
+    }
 </main>
 
 @code {
     [CascadingParameter]
     private BlazoredModalInstance ModalInstance { get; set; }
-
+    
     [Parameter]
-    public string CommandId { get; set; } = "hsA";
+    public string CommandTrigger { get; set; }
+    
+    [Parameter]
+    public ApiGuild Guild { get; set; }
+
+    private EditContext editContext;
+    private bool formInvalid = false;
 
     private Command editingCommand { get; set; } = new Command()
     {
-        Actions = new List<ICommandAction>()
-        {
-            new ReplyAction(),
-            new SendToChannelAction()
-        },
+        Trigger = ""
     };
 
     private List<ICommandAction> actions 
@@ -64,18 +86,73 @@
         get => (editingCommand?.Actions ?? new List<ICommandAction>());
     }
 
-    private string _TEST = "";
+    private string _addAction;
 
-    protected override void OnInitialized()
+    private Dictionary<string, Func<ICommandAction>> _allowedActions = new()
     {
-        if (CommandId is null)
+        { "Reply", () => new ReplyAction() },
+        { "Send to channel", () => new SendToChannelAction() }
+    };
+
+    private void _addActionFromKey(string key)
+    {
+        actions.Add(
+            _allowedActions.First(a => a.Key == key).Value.Invoke()
+        );
+        _addAction = "";
+        editContext.Validate();
+    }
+
+    private async Task _submitCommand()
+    {
+        if (!editContext.Validate())
+            return;
+
+        Console.WriteLine("yes");
+        // var req = new HttpRequestMessage(HttpMethod.Post, $"/api/guild/{GuildId}/commands/{HttpUtility.UrlEncode(CommandTrigger)}");
+
+        var str = JsonConvert.SerializeObject(editingCommand, new JsonSerializerSettings()
+        {
+            TypeNameHandling = TypeNameHandling.All
+        });
+        var content = new StringContent(str, encoding: Encoding.UTF8, "application/json");
+
+        var result = await httpClient.PostAsync($"/api/guild/{Guild.Id}/commands/{HttpUtility.UrlEncode(CommandTrigger)}", content);
+
+        if (result.IsSuccessStatusCode)
+		{
+            await ModalInstance.CloseAsync();
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (CommandTrigger is null)
         {
             editingCommand = new();
         }
         else
         {
-            // TODO: Get the command once maxy adds the api
+            HttpRequestMessage req = new(HttpMethod.Get, $"/api/guild/{Guild.Id}/commands/{HttpUtility.UrlEncode(CommandTrigger)}");
+		    var result = await httpClient.SendAsync(req);
+
+		    if (result.IsSuccessStatusCode)
+		    {
+			    editingCommand = JsonConvert.DeserializeObject<Command>(await result.Content.ReadAsStringAsync(), new JsonSerializerSettings()
+			    {
+				    TypeNameHandling = TypeNameHandling.All
+			    });
+		    }
         }
+
+        editContext = new(editingCommand);
+        editContext.OnFieldChanged += _fieldChanged;
+    }
+
+    private void _fieldChanged(object sender, FieldChangedEventArgs e)
+    {
+        formInvalid = !editContext.Validate();
+        StateHasChanged();
     }
 
     private Type _getComponentForActionType(ICommandAction preAction)
@@ -89,5 +166,10 @@
             default:
                 return null;
         }
+    }
+
+    public void Dispose()
+    {
+        editContext.OnFieldChanged -= _fieldChanged;
     }
 }
