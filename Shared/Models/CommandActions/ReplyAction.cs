@@ -2,6 +2,7 @@
 using Discord.Commands;
 using LiteDB;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
 namespace CustomCommandBot.Shared.Models.CommandActions
@@ -16,6 +17,8 @@ namespace CustomCommandBot.Shared.Models.CommandActions
         /// Text content that should be replied with, containing markdown and links.
         /// The user should include image links to embed images.
         /// </summary>
+        [Required]
+        [StringLength(2000, ErrorMessage = "Message contents should be less than or equal to 2000 characters.")]
         public string Content { get; set; }
 
         /// <summary>

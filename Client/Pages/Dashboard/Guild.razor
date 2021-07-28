@@ -31,7 +31,7 @@
                                     <div class="flexRow">
                                         <div class="spacer"></div>
 
-                                        <button class="cta">
+                                        <button class="cta" @onclick='() => Modal.Show<EditCustomCommand>("Add command")'>
                                             <i data-feather="plus"></i>
                                             <span>
                                                 Create command
@@ -42,22 +42,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>!test</td>
-                                <td>My awesome command!</td>
-                                <td>
-                                    <div class="flexRow">
-                                        <div class="spacer"></div>
-                                        <button class="outlined iconOnly" @onclick='() => Modal.Show<EditCustomCommand>("Edit Command")'>
-                                            <i data-feather="edit"></i>
-                                        </button>
+                            @foreach (var command in _guild.Commands)
+                            {
+                                <tr>
+                                    <td>@command.Trigger</td>
+                                    <td>@command.Description</td>
+                                    <td>
+                                        <div class="flexRow">
+                                            <div class="spacer"></div>
+                                            <button class="outlined iconOnly" @onclick='() => _showEditCommandModal(command.Trigger)'>
+                                                <i data-feather="edit"></i>
+                                            </button>
 
-                                        <button class="outlined iconOnly">
-                                            <i data-feather="trash-2"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                                            <button class="outlined iconOnly">
+                                                <i data-feather="trash-2"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -145,6 +148,15 @@
 	{
 		await GetGuildAsync();
 	}
+
+    private void _showEditCommandModal(string commandTrigger)
+    {
+        var modalParameters = new ModalParameters();
+        modalParameters.Add("CommandTrigger", commandTrigger);
+        modalParameters.Add("Guild", _guild);
+
+        Modal.Show<EditCustomCommand>("Edit Command", modalParameters);
+    }
 
 	private async Task GetGuildAsync() {
 		HttpRequestMessage req = new(HttpMethod.Get, $"/api/guild/{GuildId}");

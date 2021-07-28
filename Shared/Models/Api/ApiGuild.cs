@@ -19,7 +19,7 @@ namespace CustomCommandBot.Shared.Models.Api
         public string IconUrl { get; init; }
 
         public IReadOnlyCollection<ApiRole> Roles { get; init; }
-        public IReadOnlyCollection<ApiChannel> Channels { get; init; }
+        public IReadOnlyCollection<ApiChannel> TextChannels { get; init; }
 
         public IReadOnlyCollection<ApiPartialCommand> Commands { get; init; }
 
@@ -42,7 +42,7 @@ namespace CustomCommandBot.Shared.Models.Api
                     IconUrl = socketGuild.IconUrl,
                     Permissions = userGuild.Permissions.ToString(),
                     Roles = socketGuild.Roles.Select(r => ApiRole.FromSocket(r)).ToList(),
-                    Channels = socketGuild.Channels.Select(c => ApiChannel.FromSocket(c)).ToList(),
+                    TextChannels = socketGuild.Channels.Where(g => g is IMessageChannel).Select(c => ApiChannel.FromSocket(c)).ToList(),
                     Commands = commands
                 };
             }

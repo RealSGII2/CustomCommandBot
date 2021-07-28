@@ -12,6 +12,7 @@ using LiteDB;
 using System.ComponentModel.Design;
 using System.Web;
 using CustomCommandBot.Client.Pages.Dashboard;
+using Newtonsoft.Json;
 
 namespace CustomCommandBot.Server.Controllers
 {
@@ -105,7 +106,13 @@ namespace CustomCommandBot.Server.Controllers
                     return Created(HttpContext.Request.PathBase + $"/api/guild/{guildId}/commands/{HttpUtility.UrlEncode(newCommand.Trigger)}", null);
                 }
 
-                collection.Update(commandId, newCommand);
+                if (command.Trigger.ToLower() == newCommand.Trigger.ToLower())
+                    collection.Update(commandId, newCommand);
+                else
+                {
+                    collection.Delete(command.Trigger);
+                    collection.Insert(newCommand);
+                }
 
                 return Ok();
             }
