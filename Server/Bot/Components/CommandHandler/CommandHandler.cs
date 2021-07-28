@@ -54,10 +54,12 @@ namespace CustomCommandBot.Server.Bot.Components.CommandHandler
 
             SocketCommandContext context = new(Client, message);
 
+            var chunks = message.Content.Split(' ');
+
             // Check if custom command
             var results = context.Guild.GetCommands().Where(command =>
-                (command.TriggerType == CommandTriggerType.BeginsWith && message.Content.StartsWith(command.Trigger)) ||
-                (command.TriggerType == CommandTriggerType.EndsWith && message.Content.EndsWith(command.Trigger)) ||
+                (command.TriggerType == CommandTriggerType.BeginsWith && chunks[0] == command.Trigger) ||
+                (command.TriggerType == CommandTriggerType.EndsWith && chunks.Last() == command.Trigger) ||
                 (command.TriggerType == CommandTriggerType.Contains && message.Content.Contains(command.Trigger))
             ).ToList();
 
