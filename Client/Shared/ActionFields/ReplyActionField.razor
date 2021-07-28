@@ -6,9 +6,8 @@
 
 @using Discord.WebSocket
 
-<ActionFieldBase Title="Reply in channel">
-    <TextArea Label="Message" Limit="2000" @bind-InputValue="_action.Content" />
-    <EmbedEditor Label="Embed" />
+<ActionFieldBase Title="Reply in channel" OnDelete=@OnDelete>
+    <TextArea Label="Content" Limit="2000" @bind-Value="_action.Content" Position=@Position />
 </ActionFieldBase>
 
 @code {
@@ -16,7 +15,13 @@
     public ICommandAction Action { get; set; }
 
     [Parameter]
+    public int Position { get; set; }
+
+    [Parameter]
     public EventCallback<ICommandAction> ActionChanged { get; set; }
+
+    [Parameter]
+    public EventCallback OnDelete { get; set; }
 
     [Parameter]
     public SocketGuild Guild { get; set; }

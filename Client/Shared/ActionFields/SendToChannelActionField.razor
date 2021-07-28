@@ -1,15 +1,15 @@
 ﻿@using CustomCommandBot.Client.Shared.ActionFields
 @using CustomCommandBot.Client.Shared.Form
 
+@using CustomCommandBot.Shared.Models.Api
 @using CustomCommandBot.Shared.Models.Discord
 @using CustomCommandBot.Shared.Models.CommandActions
 
 @using Discord.WebSocket
 
-<ActionFieldBase Title="Reply in channel">
-    <ChannelSelect Label="Channel" @bind-SelectValue="_action.ChannelID" />
-    <TextArea Label="Message" Limit="2000" @bind-InputValue="_action.Content" />
-    <EmbedEditor Label="Embed" />
+<ActionFieldBase Title="Send to channel" OnDelete=@OnDelete>
+    <ChannelSelect Label="Channel" Options=@_channels @bind-SelectValue="_action.ChannelID" />
+    <TextArea Label="Content" Limit="2000" @bind-Value="_action.Content" Position=@Position />
 </ActionFieldBase>
 
 @code {
@@ -17,13 +17,32 @@
     public ICommandAction Action { get; set; }
 
     [Parameter]
+    public int Position { get; set; }
+
+    [Parameter]
     public EventCallback<ICommandAction> ActionChanged { get; set; }
 
     [Parameter]
-    public SocketGuild Guild { get; set; }
+    public EventCallback OnDelete { get; set; }
+
+    [Parameter]
+    public ApiGuild Guild { get; set; }
+
+    private Dictionary<string, string> _channels = new();
 
     private SendToChannelAction _action
     {
         get => Action as SendToChannelAction;
+    }
+
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine(_action.ChannelID);
+        Console.WriteLine(_action.ChannelID.GetType());
+
+        if (Guild is null || _channels.Any()) return;
+
+        foreach (var channel in Guild.TextChannels)
+            _channels.Add(channel.Id.ToString(), channel.Name);
     }
 }
