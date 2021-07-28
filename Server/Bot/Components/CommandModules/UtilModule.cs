@@ -40,5 +40,27 @@ namespace CustomCommandBot.Server.Bot.Components
 
             return CommandResult.FromSuccess("`!test` command added.");
         }
+
+        [Command("add-test-2-command")]
+        [Summary("Add a command to test the bot")]
+        [RequireOwner]
+        public async Task<RuntimeResult> AddTest2Command()
+        {
+            Context.Guild.AddCommand(new()
+            {
+                Trigger = "!test=2",
+                TriggerType = CommandTriggerType.BeginsWith,
+                Description = "Test command for use in testing custom commands",
+                Actions = new()
+                {
+                    new ReplyAction()
+                    {
+                        Content = "Test didn't fail."
+                    }
+                }
+            });
+
+            return CommandResult.FromSuccess("`!test-2` command added.");
+        }
     }
 }
