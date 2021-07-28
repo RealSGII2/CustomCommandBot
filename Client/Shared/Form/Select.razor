@@ -29,7 +29,9 @@
     <div class="dropdown" id=@guid.ToString()>
         @for (int i = 0; i < Options.Count(); i++)
         {
-            <button class=@(i == _selectIndex ? "active" : "") @onclick="() => SelectItem(i)">
+            var local = i;
+
+            <button class=@(i == _selectIndex ? "active" : "") @onclick="() => SelectItem(local)">
                 @(Options.ToList()[i])
             </button>
         }
@@ -43,6 +45,9 @@
     [Parameter] public string SelectValue { get; set; }
     [Parameter] public EventCallback<string> SelectValueChanged { get; set; }
 
+    
+    [Parameter] public EventCallback<string> CustomChanged { get; set; }
+
     [Parameter] public IEnumerable<string> Options { get; set; }
 
     private Guid guid = Guid.NewGuid();
@@ -53,7 +58,11 @@
     private async Task SelectItem(int index)
     {
         _selectIndex = index;
+
         await SelectValueChanged.InvokeAsync(Options.ToList()[index]);
+
+        if (CustomChanged.HasDelegate)
+            await CustomChanged.InvokeAsync(Options.ToList()[index]);
 
         await JavaScript.InvokeVoidAsync("removeOpenFromDropdown", guid.ToString());
     }

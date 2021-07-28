@@ -8,10 +8,10 @@
     </span>
 
     <button class="input" @onclick="_open">
-        @if (SelectValue is not 0)
+        @if (SelectValue != 0)
         {
             <span>
-                @SelectValue
+                @Options.First(i => i.Key == SelectValue.ToString()).Value
             </span>
         }
         else
@@ -27,10 +27,12 @@
     </button>
 
     <div class="dropdown" id=@guid.ToString()>
-        @for (int i = 0; i < Options.Count(); i++)
+        @foreach (var id in Options.Keys.ToList())
         {
-            <button class=@(i == _selectIndex ? "active" : "") @onclick="() => SelectItem(i)">
-                @(Options.ToList()[i])
+            var local = id;
+
+            <button class=@(local == _selectIndex ? "active" : "") @onclick="() => SelectItem(local)">
+                @Options.First(i => i.Key == local).Value
             </button>
         }
     </div>
@@ -43,19 +45,18 @@
     [Parameter] public ulong SelectValue { get; set; }
     [Parameter] public EventCallback<ulong> SelectValueChanged { get; set; }
 
-    [Parameter] public IEnumerable<ulong> Options { get; set; } = new List<ulong>();
+    [Parameter] public Dictionary<string, string> Options { get; set; } = new();
 
     private Guid guid = Guid.NewGuid();
 
-    private int _selectIndex = -1;
-    private bool _isOpen = false;
+    private string _selectIndex = "";
 
-    private async Task SelectItem(int index)
+    private async Task SelectItem(string index)
     {
         _selectIndex = index;
-        await SelectValueChanged.InvokeAsync(Options.ToList()[index]);
+        await SelectValueChanged.InvokeAsync(ulong.Parse(_selectIndex));
 
-        _isOpen = false;
+        await JavaScript.InvokeVoidAsync("removeOpenFromDropdown", guid.ToString());
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender) {
