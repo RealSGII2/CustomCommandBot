@@ -10,13 +10,19 @@ namespace CustomCommandBot.Shared.Models.Api
 {
     public class ApiPartialCommand
     {
-        public string Trigger { get; private init; }
-        public string Description { get; private init; }
+        public string Trigger { get; init; }
+        public string Description { get; init; }
 
-        public ApiPartialCommand(Command command)
+        // Exists for Newtonsoft to parse
+        public ApiPartialCommand() { }
+
+        public static ApiPartialCommand FromSocket(Command command)
         {
-            Trigger = command.Trigger;
-            Description = command.Description;
+            return new()
+            {
+                Trigger = command.Trigger,
+                Description = command.Description
+            };
         }
     }
 }

@@ -32,8 +32,7 @@ namespace CustomCommandBot.Server.Controllers
         private SocketGuild _getClientGuild(string guildId)
             => _client.Client.Guilds.First(g => g.Id == ulong.Parse(guildId));
 
-        [HttpGet]
-        public ActionResult<ApiGuild> GetGuild([FromRoute] string guildId)
+        private ActionResult<ApiGuild> _getGuild([FromRoute] string guildId)
         {
             var clientGuild = _getClientGuild(guildId);
 
@@ -46,17 +45,28 @@ namespace CustomCommandBot.Server.Controllers
             if (userGuild is null)
                 return Forbid();
 
-            var guild = new ApiGuild(clientGuild, userGuild);
+            var guild = ApiGuild.FromSocket(clientGuild, userGuild);
 
             return guild;
+        }
+
+        [HttpGet]
+        public ActionResult<ApiGuild> GetGuild([FromRoute] string guildId)
+        {
+            var guild = _getGuild(guildId);
+
+            if (guild.Value is null)
+                return NotFound();
+
+            return new JsonResult(guild.Value);
         }
 
         [HttpGet("commands/{commandId}")]
         public ActionResult<Command> GetGuildCommand([FromRoute] string guildId, [FromRoute] string commandId)
         {
-            var clientGuild = _getClientGuild(guildId);
+            var guild = _getGuild(guildId);
 
-            if (clientGuild is null)
+            if (guild.Value is null)
                 return NotFound();
 
             using (var database = new LiteDatabase(@"Databases/Commands.db"))
@@ -69,16 +79,16 @@ namespace CustomCommandBot.Server.Controllers
                 if (!command.Any())
                     return NotFound();
 
-                return command.First();
+                return new JsonResult(command.First());
             }
         }
 
         [HttpPost("commands/{commandId}")]
         public ActionResult SetGuildCommand([FromRoute] string guildId, [FromRoute] string commandId, [FromBody] Command newCommand)
         {
-            var clientGuild = _getClientGuild(guildId);
+            var guild = _getGuild(guildId);
 
-            if (clientGuild is null)
+            if (guild.Value is null)
                 return NotFound();
 
             using (var database = new LiteDatabase(@"Databases/Commands.db"))

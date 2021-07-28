@@ -12,34 +12,39 @@ namespace CustomCommandBot.Shared.Models.Api
 {
     public class ApiGuild
     {
-        public string Name { get; private init; }
-        public ulong Id { get; private init; }
-        public Int32 Permissions { get; private init; }
+        public string Name { get; init; }
+        public string Id { get; init; }
+        public string Permissions { get; init; }
 
-        public string IconUrl { get; private init; }
+        public string IconUrl { get; init; }
 
-        public IReadOnlyCollection<ApiRole> Roles { get; private init; }
-        public IReadOnlyCollection<ApiChannel> Channels { get; private init; }
+        public IReadOnlyCollection<ApiRole> Roles { get; init; }
+        public IReadOnlyCollection<ApiChannel> Channels { get; init; }
 
-        public IReadOnlyCollection<ApiPartialCommand> Commands { get; private init; }
+        public IReadOnlyCollection<ApiPartialCommand> Commands { get; init; }
 
-        public ApiGuild(SocketGuild socketGuild, UserGuild userGuild)
+        // Exists for Newtonsoft to parse
+        public ApiGuild() { }
+
+        public static ApiGuild FromSocket(SocketGuild socketGuild, UserGuild userGuild)
         {
-            Name = socketGuild.Name;
-            Id = socketGuild.Id;
-            IconUrl = socketGuild.IconUrl;
-
-            Permissions = userGuild.Permissions;
-
-            Roles = socketGuild.Roles.Select(r => new ApiRole(r)).ToList();
-            Channels = socketGuild.Channels.Select(c => new ApiChannel(c)).ToList();
-
             using (var database = new LiteDatabase(@"Databases/Commands.db"))
             {
-                var collection = database.GetCollection<Command>("g" + Id);
+                var collection = database.GetCollection<Command>("g" + userGuild.Id);
                 collection.EnsureIndex(d => d.TriggerType);
 
-                Commands = collection.FindAll().Select(c => new ApiPartialCommand(c)).ToList();
+                var commands = collection.FindAll().Select(c => ApiPartialCommand.FromSocket(c)).ToList();
+
+                return new()
+                {
+                    Name = socketGuild.Name,
+                    Id = socketGuild.Id.ToString(),
+                    IconUrl = socketGuild.IconUrl,
+                    Permissions = userGuild.Permissions.ToString(),
+                    Roles = socketGuild.Roles.Select(r => ApiRole.FromSocket(r)).ToList(),
+                    Channels = socketGuild.Channels.Select(c => ApiChannel.FromSocket(c)).ToList(),
+                    Commands = commands
+                };
             }
         }
     }

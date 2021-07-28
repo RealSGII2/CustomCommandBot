@@ -10,13 +10,19 @@ namespace CustomCommandBot.Shared.Models.Api
 {
     public class ApiChannel
     {
-        public string Name { get; private init; }
-        public ulong Id { get; private init; }
+        public string Name { get; init; }
+        public ulong Id { get; init; }
 
-        public ApiChannel(SocketGuildChannel socketChannel)
+        // Exists for Newtonsoft to parse
+        public ApiChannel() { }
+
+        public static ApiChannel FromSocket(SocketGuildChannel socketChannel)
         {
-            Name = socketChannel.Name;
-            Id = socketChannel.Id;
+            return new()
+            {
+                Name = socketChannel.Name,
+                Id = socketChannel.Id
+            };
         }
     }
 }

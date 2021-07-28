@@ -10,16 +10,22 @@ namespace CustomCommandBot.Shared.Models.Api
 {
     public class ApiRole
     {
-        public string Name { get; private init; }
-        public ulong Id { get; private init; }
+        public string Name { get; init; }
+        public ulong Id { get; init; }
 
-        public string ColorHex { get; private init; }
+        public string ColorHex { get; init; }
 
-        public ApiRole(SocketRole socketRole)
+        // Exists for Newtonsoft to parse
+        public ApiRole() { }
+
+        public static ApiRole FromSocket(SocketRole socketRole)
         {
-            Name = socketRole.Name;
-            Id = socketRole.Id;
-            ColorHex = socketRole.Color.ToString();
+            return new()
+            {
+                Name = socketRole.Name,
+                Id = socketRole.Id,
+                ColorHex = socketRole.Color.ToString()
+            };
         }
     }
 }
