@@ -13,6 +13,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.0-preview.6.21355.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.0-preview.6.21355.2" />
     <PackageReference Include="Microsoft.Toolkit" Version="7.0.2" />
+    <PackageReference Include="NLua" Version="1.5.9" />
     <PackageReference Include="YamlDotNet" Version="11.2.1" />
   </ItemGroup>
 
