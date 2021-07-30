@@ -21,11 +21,15 @@ namespace CustomCommandBot.Server.Bot.Components.CommandHandler
         private CommandService CommandService;
         private IServiceProvider Services;
 
+        private CustomCodeRunner _customCode;
+
         public CommandHandler(IServiceProvider services, CommandService commandService, DiscordSocketClient client)
         {
             Client = client;
             CommandService = commandService;
             Services = services;
+
+            _customCode = new();
 
             CommandService.Log += Log;
         }
@@ -82,6 +86,9 @@ namespace CustomCommandBot.Server.Bot.Components.CommandHandler
             {
                 // Yes, it is a custom command
                 var command = results[0];
+
+                if (command.CustomCode is not null)
+                    _customCode.Run(command.CustomCode, context);
 
                 foreach (ICommandAction action in command.Actions)
                 {

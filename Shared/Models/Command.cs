@@ -19,6 +19,8 @@ namespace CustomCommandBot.Shared.Models
 
         [ValidateComplexType]
         public List<ICommandAction> Actions { get; set; }
+
+        public string CustomCode { get; set; }
     }
 
     public enum CommandTriggerType

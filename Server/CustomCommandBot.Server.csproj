@@ -26,5 +26,14 @@
     <Folder Include="Databases\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Bot\Components\CustomCode\Code.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Bot\Components\CustomCode\Sandbox.lua">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 
 </Project>

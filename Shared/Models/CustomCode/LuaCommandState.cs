@@ -8,5 +8,6 @@ namespace CustomCommandBot.Shared.Models.CustomCode
 {
     public class LuaCommandState
     {
+        public LuaCommandContext Context { get; init; }
     }
 }
